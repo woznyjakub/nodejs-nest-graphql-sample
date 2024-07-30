@@ -1,0 +1,14 @@
+cd api
+
+echo "Running linter..."
+pnpm lint
+LINT_RESULT=$?
+
+echo "Running tests..."
+pnpm test
+TEST_RESULT=$?
+
+if [ $LINT_RESULT -ne 0 ] || [ $TEST_RESULT -ne 0 ]; then
+echo "Pre-commit hook failed. Please fix errors and try committing again."
+exit 1
+fi
