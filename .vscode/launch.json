@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "api (docker)",
+      "remoteRoot": "/app",
+      "localRoot": "${workspaceFolder}/api",
+      "port": 9229,
+      "restart": true,
+      "address": "localhost",
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}
