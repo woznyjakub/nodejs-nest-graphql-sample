@@ -10,6 +10,7 @@ import securityPlugin from 'eslint-plugin-security';
 export default [
   {
     files: ['**/*.ts'],
+    ignores: ['*.config*.mts'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
