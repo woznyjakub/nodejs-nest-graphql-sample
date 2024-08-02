@@ -1,4 +1,4 @@
-import { getConfig } from './configuration.module';
+import { getConfig } from './config';
 
 describe('Configuration module', () => {
   it('should transform screaming snake case env variables to camel case config', () => {

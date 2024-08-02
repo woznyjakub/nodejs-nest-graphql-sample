@@ -5,6 +5,7 @@ import { config } from 'dotenv';
 
 export default defineConfig({
   test: {
+    setupFiles: ['./test/setup.ts'],
     globals: true,
     root: './',
     env: { ...config({ path: './.env' }).parsed },

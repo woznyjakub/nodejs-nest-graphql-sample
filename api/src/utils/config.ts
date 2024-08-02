@@ -1,4 +1,3 @@
-import { ConfigModule } from '@nestjs/config';
 import { plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
 import { memoize, camelCase } from 'lodash';
@@ -10,20 +9,22 @@ export type Config = {
   nodeEnv: NodeEnv;
 };
 
-const transformEnv = (config: Record<string, unknown>): EnvironmentVariables =>
-  plainToInstance(EnvironmentVariables, config, {
+type UnvalidatedEnv = Record<string, unknown>;
+
+const transformEnv = (env: UnvalidatedEnv): EnvironmentVariables =>
+  plainToInstance(EnvironmentVariables, env, {
     enableImplicitConversion: true,
     excludeExtraneousValues: true,
   });
 
-const validateEnv = (config: Record<string, unknown>): EnvironmentVariables => {
-  const transformedConfig = transformEnv(config);
-  const errors = validateSync(transformedConfig, { skipMissingProperties: false });
+export const validateEnv = (env: UnvalidatedEnv): EnvironmentVariables => {
+  const transformedEnv = transformEnv(env);
+  const errors = validateSync(transformedEnv, { skipMissingProperties: false });
 
   if (errors.length > 0) {
     throw new Error(errors.toString());
   }
-  return transformedConfig;
+  return transformedEnv;
 };
 
 export const getConfig = memoize((): Config => {
@@ -35,14 +36,4 @@ export const getConfig = memoize((): Config => {
   }, {});
 
   return camelCasedEnv as Config;
-});
-
-export const ConfigurationModule = ConfigModule.forRoot({
-  cache: true,
-  load: [getConfig],
-  validate: validateEnv,
-  validationOptions: {
-    allowUnknown: false,
-    abortEarly: true,
-  },
 });
