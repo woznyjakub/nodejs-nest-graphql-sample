@@ -28,6 +28,17 @@ export default [
       promise: promisePlugin,
       security: securityPlugin,
     },
+    settings: {
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.ts'],
+        },
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json',
+        },
+      },
+    },
     rules: {
       '@typescript-eslint/interface-name-prefix': 'off',
       '@typescript-eslint/explicit-function-return-type': 'error',
@@ -100,12 +111,13 @@ export default [
       'max-depth': ['error', 3],
       complexity: ['error', 10],
     },
-    settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.ts'],
-        },
-      },
+  },
+  {
+    // overwrite for test files
+    files: ['**/*.test.ts', '**/*.spec.ts'],
+    rules: {
+      'max-lines-per-function': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
     },
   },
 ];

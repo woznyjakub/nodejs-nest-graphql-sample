@@ -7,6 +7,7 @@ export default defineConfig({
   test: {
     setupFiles: ['./test/setup.ts'],
     globals: true,
+    restoreMocks: true,
     root: './',
     env: { ...config({ path: './.env' }).parsed },
   },

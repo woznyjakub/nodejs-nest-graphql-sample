@@ -2,11 +2,13 @@ import { plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
 import { memoize, camelCase } from 'lodash';
 
-import { EnvironmentVariables, NodeEnv } from './env';
+import { EnvironmentVariables, LogLevel, NodeEnv } from './env';
 
 export type Config = {
   port: number;
   nodeEnv: NodeEnv;
+  logLevel: LogLevel;
+  logDir: string;
 };
 
 type UnvalidatedEnv = Record<string, unknown>;
