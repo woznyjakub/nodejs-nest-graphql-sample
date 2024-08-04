@@ -1,5 +1,5 @@
-import { mkdirSync } from 'fs';
-import { join } from 'path';
+import { mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 import { Injectable, type LoggerService as NestLoggerService } from '@nestjs/common';
 import { createLogger, Logger as WinstonLogger, format, transports } from 'winston';

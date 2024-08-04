@@ -1,4 +1,4 @@
-import { mkdirSync } from 'fs';
+import { mkdirSync } from 'node:fs';
 
 import { createLogger } from 'winston';
 import WinstonDaily from 'winston-daily-rotate-file';

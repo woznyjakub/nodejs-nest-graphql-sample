@@ -45,6 +45,7 @@ export default [
       '@typescript-eslint/explicit-module-boundary-types': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/naming-convention': [
         'error',
         {
@@ -84,6 +85,7 @@ export default [
       'unicorn/no-null': 'off',
       'unicorn/prevent-abbreviations': 'off',
       'unicorn/prefer-top-level-await': 'off',
+      'unicorn/prefer-node-protocol': 'error',
       'unicorn/filename-case': [
         'error',
         {
