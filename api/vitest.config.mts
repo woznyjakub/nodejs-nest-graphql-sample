@@ -2,6 +2,7 @@ import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 
 import { config } from 'dotenv';
+import { resolve } from 'path';
 
 export default defineConfig({
   test: {
@@ -10,6 +11,11 @@ export default defineConfig({
     restoreMocks: true,
     root: './',
     env: { ...config({ path: './.env' }).parsed },
+  },
+  resolve: {
+    alias: {
+      '@utils': resolve(__dirname, './src/utils'),
+    },
   },
   plugins: [
     // This is required to build the test files with SWC
