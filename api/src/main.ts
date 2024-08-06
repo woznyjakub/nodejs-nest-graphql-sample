@@ -13,8 +13,16 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
     logger: new LoggerService(),
   });
+
+  app.enableCors({
+    origin: ['http://localhost'],
+    methods: 'GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS',
+    credentials: true,
+    maxAge: 600,
+  });
+
   const { port } = getConfig();
 
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 }
 void bootstrap();
