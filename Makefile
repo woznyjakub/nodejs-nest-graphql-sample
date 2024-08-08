@@ -7,6 +7,7 @@ SHELL := /bin/bash
 APP_NAME = syncro-chat-api
 APP_NAME := $(APP_NAME)
 NODE_APP_NAME = api
+REACT_APP_NAME = ui-web
 
 help:
 	@grep -E '^[1-9a-zA-Z_-]+:.*?## .*$$|(^#--)' $(MAKEFILE_LIST) \
@@ -40,5 +41,8 @@ clean: ## Clean the images
 remove: ## Remove the volumes
 	docker volume rm -f ${APP_NAME}
 
-watch-node: ## watch nodejs app logs
+watch-api: ## watch nodejs app logs
 	docker logs -f ${NODE_APP_NAME}
+
+watch-ui-web: ## watch nodejs app logs
+	docker logs -f ${REACT_APP_NAME}

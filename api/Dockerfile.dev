@@ -4,9 +4,10 @@ RUN npm i -g pnpm
 
 WORKDIR /app
 
-COPY . .
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install
 
-RUN pnpm i
+COPY . .
 
 EXPOSE 3000 9229
 

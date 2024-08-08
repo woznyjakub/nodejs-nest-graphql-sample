@@ -15,6 +15,9 @@ async function bootstrap(): Promise<void> {
     logger: new LoggerService(),
   });
 
+  const prefix = '/api';
+  app.setGlobalPrefix(prefix);
+
   app.enableCors({
     origin: ['http://localhost'],
     methods: 'GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS',
@@ -27,7 +30,7 @@ async function bootstrap(): Promise<void> {
     .setDescription('SyncroChat main backend API description')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup(`${prefix}/docs`, app, document);
 
   const { port } = getConfig();
 
