@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import dotenv from 'dotenv';
 
 import { AppModule } from './app.module';
@@ -20,6 +21,13 @@ async function bootstrap(): Promise<void> {
     credentials: true,
     maxAge: 600,
   });
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('SyncroChat')
+    .setDescription('SyncroChat main backend API description')
+    .build();
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('api', app, document);
 
   const { port } = getConfig();
 
