@@ -64,6 +64,7 @@ export default [
       'no-unreachable': 'error',
       curly: ['error', 'all'],
       eqeqeq: ['error', 'always'],
+      'no-constant-condition': 'error',
       'prefer-const': 'error',
       'prefer-template': 'error',
       'require-await': 'error',
