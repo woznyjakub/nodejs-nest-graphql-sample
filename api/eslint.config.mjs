@@ -121,6 +121,7 @@ export default [
     rules: {
       'max-lines-per-function': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
+      'promise/valid-params': 'off',
     },
   },
 ];

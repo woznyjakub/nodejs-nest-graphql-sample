@@ -2,7 +2,8 @@
   "compilerOptions": {
     "paths": {
       "@utils/*": ["src/utils/*"],
-      "@async-local-storage/*": ["src/async-local-storage/*"]
+      "@async-local-storage/*": ["src/async-local-storage/*"],
+      "@logger/*": ["src/logger/*"]
     },
     "module": "commonjs",
     "declaration": true,

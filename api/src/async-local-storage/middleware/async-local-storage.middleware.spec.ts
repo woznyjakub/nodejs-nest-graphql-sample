@@ -40,8 +40,8 @@ describe('AsyncLocalStorageMiddleware', () => {
     asyncLocalStorage = moduleRef.get<AsyncLocalStorage<ALSContext>>(AsyncLocalStorage);
   });
 
-  it('should use existing x-request-id header if present', () => {
-    const req = { headers: { 'x-request-id': 'test-id' } } as unknown as Request;
+  it('should use existing x-trace-id header if present', () => {
+    const req = { headers: { 'x-trace-id': 'test-id' } } as unknown as Request;
     const res = {} as Response;
     const next = vi.fn() as NextFunction;
 
@@ -54,7 +54,7 @@ describe('AsyncLocalStorageMiddleware', () => {
     expect(next).toHaveBeenCalled();
   });
 
-  it('should generate new UUID if x-request-id header is not present', () => {
+  it('should generate new UUID if x-trace-id header is not present', () => {
     const req = { headers: {} } as Request;
     const res = {} as Response;
     const next = vi.fn() as NextFunction;

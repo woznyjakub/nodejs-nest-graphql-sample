@@ -16,6 +16,7 @@ export default defineConfig({
     alias: {
       '@utils': resolve(__dirname, './src/utils'),
       '@async-local-storage': resolve(__dirname, './src/async-local-storage'),
+      '@logger': resolve(__dirname, './src/logger'),
     },
   },
   plugins: [

@@ -10,7 +10,7 @@ import { ALSContext } from '../async-local-storage.module';
 export class AsyncLocalStorageMiddleware implements NestMiddleware {
   constructor(private readonly asyncLocalStorage: AsyncLocalStorage<ALSContext>) {}
   use(req: Request, _res: Response, next: NextFunction): void {
-    const traceId = String(req.headers['x-request-id'] || randomUUID());
+    const traceId = String(req.headers['x-trace-id'] || randomUUID());
 
     this.asyncLocalStorage.run({ traceId }, () => {
       next();
