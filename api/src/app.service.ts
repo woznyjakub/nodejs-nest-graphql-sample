@@ -2,7 +2,7 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 
 import { Injectable } from '@nestjs/common';
 
-import { ALSContext } from './async-local-storage/async-local-storage.module';
+import { ALSContext } from '@async-local-storage/async-local-storage.module';
 
 @Injectable()
 export class AppService {

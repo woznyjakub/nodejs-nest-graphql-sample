@@ -3,8 +3,8 @@
     "paths": {
       "@common/*": ["src/common/*"],
       "@utils/*": ["src/utils/*"],
-      "@async-local-storage/*": ["src/async-local-storage/*"],
-      "@logger/*": ["src/logger/*"]
+      "@async-local-storage/*": ["src/modules/async-local-storage/*"],
+      "@logger/*": ["src/modules/logger/*"]
     },
     "module": "commonjs",
     "declaration": true,
