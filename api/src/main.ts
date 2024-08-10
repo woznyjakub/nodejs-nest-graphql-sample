@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 
 import { AppModule } from './app.module';
 
+import { getConfig, validateEnv } from '@config/config';
 import { LoggerService } from '@logger/services/logger.service';
-import { getConfig, validateEnv } from '@utils/config';
 
 async function bootstrap(): Promise<void> {
   dotenv.config();

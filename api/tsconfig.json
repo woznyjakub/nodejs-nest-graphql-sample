@@ -2,7 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@common/*": ["src/common/*"],
-      "@utils/*": ["src/utils/*"],
+      "@config/*": ["src/config/*"],
       "@async-local-storage/*": ["src/modules/async-local-storage/*"],
       "@logger/*": ["src/modules/logger/*"]
     },

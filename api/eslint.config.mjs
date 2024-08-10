@@ -83,6 +83,12 @@ export default [
       'import/no-unresolved': 'error',
       'import/no-extraneous-dependencies': 'error',
       'import/order': ['error', { 'newlines-between': 'always', alphabetize: { order: 'asc' } }],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: ['src/'],
+        },
+      ],
       'unicorn/no-null': 'off',
       'unicorn/prevent-abbreviations': 'off',
       'unicorn/prefer-top-level-await': 'off',

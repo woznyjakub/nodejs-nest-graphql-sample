@@ -5,7 +5,7 @@ import { Injectable, type LoggerService as NestLoggerService } from '@nestjs/com
 import { createLogger, Logger as WinstonLogger, format, transports } from 'winston';
 import WinstonDaily from 'winston-daily-rotate-file';
 
-import { getConfig } from '@utils/config';
+import { getConfig } from '@config/config';
 
 @Injectable()
 export class LoggerService implements NestLoggerService {
