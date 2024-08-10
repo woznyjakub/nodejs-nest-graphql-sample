@@ -2,9 +2,9 @@ import { ExecutionContext } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { of } from 'rxjs';
 
-import { LoggerService } from '../services/logger.service';
-
 import { RequestLoggerInterceptor } from './request-logger.interceptor';
+
+import { LoggerService } from '@logger/services/logger.service';
 
 describe('RequestLoggerInterceptor', () => {
   let interceptor: RequestLoggerInterceptor;

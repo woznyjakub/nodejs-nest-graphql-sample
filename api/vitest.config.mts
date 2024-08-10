@@ -14,6 +14,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '@common': resolve(__dirname, './src/common'),
       '@utils': resolve(__dirname, './src/utils'),
       '@async-local-storage': resolve(__dirname, './src/async-local-storage'),
       '@logger': resolve(__dirname, './src/logger'),
