@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "0.0.1",
-  "description": "SyncroChat's main backend part",
+  "description": "Main backend part",
   "author": "Jakub Woźny",
   "private": true,
   "license": "UNLICENSED",

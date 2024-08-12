@@ -4,7 +4,7 @@
 
 SHELL := /bin/bash
 
-APP_NAME = syncro-chat-api
+APP_NAME = starter-api
 APP_NAME := $(APP_NAME)
 NODE_APP_NAME = api
 REACT_APP_NAME = ui-web

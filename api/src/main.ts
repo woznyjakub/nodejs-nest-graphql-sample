@@ -26,8 +26,8 @@ async function bootstrap(): Promise<void> {
   });
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('SyncroChat')
-    .setDescription('SyncroChat main backend API description')
+    .setTitle('Nest.js + React.js Monorepo rich starter')
+    .setDescription('Main backend API description')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup(`${prefix}/docs`, app, document);
