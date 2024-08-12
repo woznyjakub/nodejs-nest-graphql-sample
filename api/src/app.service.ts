@@ -1,14 +1,12 @@
-import { AsyncLocalStorage } from 'node:async_hooks';
-
 import { Injectable } from '@nestjs/common';
 
-import { ALSContext } from '@async-local-storage/async-local-storage.module';
+import { ContextStorageService } from '@context-storage/services/context-storage.service';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly als: AsyncLocalStorage<ALSContext>) {}
+  constructor(private readonly ctxStorageService: ContextStorageService) {}
   getHello(): string {
-    const { traceId } = this.als.getStore()!;
+    const { traceId } = this.ctxStorageService.getPredefinedFields();
     const message = `Hello World! trace id: ${traceId}`;
 
     return message;

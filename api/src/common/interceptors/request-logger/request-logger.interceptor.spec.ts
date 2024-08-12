@@ -23,8 +23,8 @@ describe('RequestLoggerInterceptor', () => {
       ],
     }).compile();
 
-    interceptor = module.get<RequestLoggerInterceptor>(RequestLoggerInterceptor);
-    loggerService = module.get<LoggerService>(LoggerService);
+    interceptor = module.get(RequestLoggerInterceptor);
+    loggerService = module.get(LoggerService);
   });
 
   it('should log the request method and URL', () => {

@@ -1,10 +1,8 @@
-import { AsyncLocalStorage } from 'node:async_hooks';
-
 import { ArgumentsHost, Catch, HttpException, HttpStatus } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { Response } from 'express';
 
-import { ALSContext } from '@async-local-storage/async-local-storage.module';
+import { ContextStorageService } from '@context-storage/services/context-storage.service';
 import { LoggerService } from '@logger/services/logger.service';
 
 export type DefaultErrorResponse = {
@@ -17,14 +15,14 @@ export type DefaultErrorResponse = {
 export class AllExceptionsFilter extends BaseExceptionFilter {
   constructor(
     private readonly logger: LoggerService,
-    private readonly als: AsyncLocalStorage<ALSContext>,
+    private readonly ctxStorageService: ContextStorageService,
   ) {
     super();
   }
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
-    const { traceId } = this.als.getStore()!;
+    const { traceId } = this.ctxStorageService.getPredefinedFields();
 
     const httpStatus =
       exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;

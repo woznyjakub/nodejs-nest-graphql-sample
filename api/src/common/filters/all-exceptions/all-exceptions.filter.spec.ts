@@ -1,11 +1,10 @@
-import { AsyncLocalStorage } from 'node:async_hooks';
-
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 
 import { AllExceptionsFilter, DefaultErrorResponse } from './all-exceptions.filter';
 
+import { ContextStorageService } from '@context-storage/services/context-storage.service';
 import { LoggerService } from '@logger/services/logger.service';
 
 describe('AllExceptionsFilter', () => {
@@ -39,16 +38,16 @@ describe('AllExceptionsFilter', () => {
           },
         },
         {
-          provide: AsyncLocalStorage,
+          provide: ContextStorageService,
           useValue: {
-            getStore: vi.fn(() => ({ traceId: mockTraceId })),
+            getPredefinedFields: vi.fn(() => ({ traceId: mockTraceId })),
           },
         },
       ],
     }).compile();
 
-    filter = module.get<AllExceptionsFilter>(AllExceptionsFilter);
-    loggerService = module.get<LoggerService>(LoggerService);
+    filter = module.get(AllExceptionsFilter);
+    loggerService = module.get(LoggerService);
 
     // typing workaround
     mockRes.status.mockImplementation(() => mockRes);
