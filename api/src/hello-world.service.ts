@@ -3,12 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { ContextStorageService } from '@context-storage/services/context-storage.service';
 
 @Injectable()
-export class AppService {
+export class HelloWorldService {
   constructor(private readonly ctxStorageService: ContextStorageService) {}
   getHello(): string {
     const { traceId } = this.ctxStorageService.getPredefinedFields();
-    const message = `Hello World! trace id: ${traceId}`;
 
-    return message;
+    return `Hello World! trace id: ${traceId}`;
   }
 }
