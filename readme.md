@@ -8,7 +8,7 @@
 - Docker
 - PostgreSQL (todo)
 - React.js
-- Tailwind CSS (todo)
+- Tailwind CSS
 
 ### Backend
 
@@ -48,11 +48,11 @@
 ### Frontend
 
 - Initialized with Vite: TypeScript + SWC
+- Tailwind CSS
 - Docker setup
 - Nginx setup
 
 ### Todo Frontend
 
-- Tailwind CSS
 - Vitest
 - research (!)
