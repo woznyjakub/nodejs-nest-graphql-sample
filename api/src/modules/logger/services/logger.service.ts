@@ -81,10 +81,29 @@ export class LoggerService implements NestLoggerService {
   private runLog(logFn: LeveledLogMethod, message: string, ...optionalParams: unknown[]): void {
     const traceId = this.ctxStorageService.getPredefinedFields()?.traceId ?? null;
 
-    logFn(message, { traceId, ...optionalParams });
+    logFn(this.formatMessage(message, traceId, optionalParams));
   }
 
   private setupLogDir(logDir: string): void {
     mkdirSync(logDir, { recursive: true, mode: 0o755 });
+  }
+
+  private formatMessage(
+    message: string,
+    traceId: string | null,
+    optionalParams: unknown[],
+  ): string {
+    const traceIdPart = traceId && `Trace ID: ${traceId}`;
+    const metadataPart = optionalParams.length && `Metadata: ${this.parseMetadata(optionalParams)}`;
+
+    return [message, traceIdPart, metadataPart].filter(Boolean).join(', ');
+  }
+
+  private parseMetadata(data: unknown): string {
+    try {
+      return JSON.stringify(data);
+    } catch (error) {
+      return `Failed to parse metadata. Error: ${error}`;
+    }
   }
 }
