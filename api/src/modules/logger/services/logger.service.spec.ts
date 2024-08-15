@@ -1,9 +1,12 @@
 import { mkdirSync } from 'node:fs';
 
+import { Test } from '@nestjs/testing';
 import { createLogger } from 'winston';
 import WinstonDaily from 'winston-daily-rotate-file';
 
 import { LoggerService } from './logger.service';
+
+import { ContextStorageService } from '@context-storage/services/context-storage.service';
 
 const loggerMock = vi.hoisted(() => ({
   info: vi.fn(),
@@ -35,9 +38,22 @@ vi.mock('winston', () => ({
 
 describe('LoggerService', () => {
   let loggerService: LoggerService;
+  const mockTraceId = 'mock-trace-id';
 
-  beforeEach(() => {
-    loggerService = new LoggerService();
+  beforeEach(async () => {
+    const module = await Test.createTestingModule({
+      providers: [
+        LoggerService,
+        {
+          provide: ContextStorageService,
+          useValue: {
+            getPredefinedFields: vi.fn(() => ({ traceId: mockTraceId })),
+          },
+        },
+      ],
+    }).compile();
+
+    loggerService = module.get(LoggerService);
   });
 
   it('should create log directory on initialization', () => {
@@ -52,31 +68,31 @@ describe('LoggerService', () => {
   it('should log info messages', () => {
     const message = 'Test info message';
     loggerService.log(message);
-    expect(loggerMock.info).toHaveBeenCalledWith(message);
+    expect(loggerMock.info).toHaveBeenCalledWith(message, { traceId: mockTraceId });
   });
 
   it('should log error messages', () => {
     const message = 'Test error message';
     loggerService.error(message);
-    expect(loggerMock.error).toHaveBeenCalledWith(message);
+    expect(loggerMock.error).toHaveBeenCalledWith(message, { traceId: mockTraceId });
   });
 
   it('should log warning messages', () => {
     const message = 'Test warning message';
     loggerService.warn(message);
-    expect(loggerMock.warn).toHaveBeenCalledWith(message);
+    expect(loggerMock.warn).toHaveBeenCalledWith(message, { traceId: mockTraceId });
   });
 
   it('should log debug messages', () => {
     const message = 'Test debug message';
     loggerService.debug(message);
-    expect(loggerMock.debug).toHaveBeenCalledWith(message);
+    expect(loggerMock.debug).toHaveBeenCalledWith(message, { traceId: mockTraceId });
   });
 
   it('should handle additional parameters in log methods', () => {
     const message = 'Test message with params';
     const params = [1, { test: 'object' }, [1, 2, 3]];
     loggerService.log(message, ...params);
-    expect(loggerMock.info).toHaveBeenCalledWith(message, ...params);
+    expect(loggerMock.info).toHaveBeenCalledWith(message, { traceId: mockTraceId, ...params });
   });
 });

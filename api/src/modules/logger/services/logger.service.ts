@@ -2,16 +2,23 @@ import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { Injectable, type LoggerService as NestLoggerService } from '@nestjs/common';
-import { createLogger, Logger as WinstonLogger, format, transports } from 'winston';
+import {
+  createLogger,
+  Logger as WinstonLogger,
+  format,
+  transports,
+  type LeveledLogMethod,
+} from 'winston';
 import WinstonDaily from 'winston-daily-rotate-file';
 
 import { getConfig } from '@config/config';
+import { ContextStorageService } from '@context-storage/services/context-storage.service';
 
 @Injectable()
 export class LoggerService implements NestLoggerService {
   private logger: WinstonLogger;
 
-  constructor() {
+  constructor(private readonly ctxStorageService: ContextStorageService) {
     const { logDir, logLevel } = getConfig();
     const absoluteLogdir = join(process.cwd(), logDir);
     this.setupLogDir(absoluteLogdir);
@@ -56,19 +63,25 @@ export class LoggerService implements NestLoggerService {
   }
 
   log(message: string, ...optionalParams: unknown[]): void {
-    this.logger.info(message, ...optionalParams);
+    this.runLog(this.logger.info, message, ...optionalParams);
   }
 
   error(message: string, ...optionalParams: unknown[]): void {
-    this.logger.error(message, ...optionalParams);
+    this.runLog(this.logger.error, message, ...optionalParams);
   }
 
   warn(message: string, ...optionalParams: unknown[]): void {
-    this.logger.warn(message, ...optionalParams);
+    this.runLog(this.logger.warn, message, ...optionalParams);
   }
 
   debug(message: string, ...optionalParams: unknown[]): void {
-    this.logger.debug(message, ...optionalParams);
+    this.runLog(this.logger.debug, message, ...optionalParams);
+  }
+
+  private runLog(logFn: LeveledLogMethod, message: string, ...optionalParams: unknown[]): void {
+    const traceId = this.ctxStorageService.getPredefinedFields()?.traceId ?? null;
+
+    logFn(message, { traceId, ...optionalParams });
   }
 
   private setupLogDir(logDir: string): void {

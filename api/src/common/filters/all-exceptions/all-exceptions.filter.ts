@@ -8,7 +8,7 @@ import { LoggerService } from '@logger/services/logger.service';
 export type DefaultErrorResponse = {
   statusCode: HttpStatus;
   timestamp: string;
-  traceId: string;
+  traceId: string | null;
 };
 
 @Catch()
@@ -22,16 +22,10 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
-    const { traceId } = this.ctxStorageService.getPredefinedFields();
+    const traceId = this.ctxStorageService.getPredefinedFields()?.traceId ?? null;
 
     const httpStatus =
       exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
-
-    const responseBody = {
-      statusCode: httpStatus,
-      timestamp: new Date().toISOString(),
-      traceId,
-    } satisfies DefaultErrorResponse;
 
     try {
       // throw new Error(...) cases
@@ -42,6 +36,12 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
       // eslint-disable-next-line
       console.error({ originalException: exception, error });
     }
+
+    const responseBody: DefaultErrorResponse = {
+      statusCode: httpStatus,
+      timestamp: new Date().toISOString(),
+      traceId,
+    };
 
     res.status(httpStatus).json(responseBody);
   }

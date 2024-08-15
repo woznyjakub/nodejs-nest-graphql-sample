@@ -8,12 +8,15 @@ import { ContextStore, PredefinedContextFields } from './utils/context-store';
 export class ContextStorageService {
   private asyncLocalStorage = new AsyncLocalStorage<ContextStore>();
 
-  getStore(): ContextStore {
-    return this.asyncLocalStorage.getStore()!;
+  /**
+   * undefined when wrapWithContext() was not called by middleware
+   */
+  getStore(): ContextStore | undefined {
+    return this.asyncLocalStorage.getStore();
   }
 
-  getPredefinedFields(): PredefinedContextFields {
-    return this.getStore().getPredefined();
+  getPredefinedFields(): PredefinedContextFields | undefined {
+    return this.getStore()?.getPredefined();
   }
 
   wrapWithContext(predefinedFields: PredefinedContextFields, wrapperCallback: () => void): void {

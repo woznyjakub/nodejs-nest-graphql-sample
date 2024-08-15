@@ -23,6 +23,9 @@ describe('AllExceptionsFilter', () => {
     }),
   };
   const mockCurrDate = new Date('2024-07-01T12:00:00Z').toISOString();
+  const mockGetPredefinedFields: Mock<ContextStorageService['getPredefinedFields']> = vi.fn(() => ({
+    traceId: mockTraceId,
+  }));
 
   beforeEach(async () => {
     vi.useFakeTimers();
@@ -40,7 +43,7 @@ describe('AllExceptionsFilter', () => {
         {
           provide: ContextStorageService,
           useValue: {
-            getPredefinedFields: vi.fn(() => ({ traceId: mockTraceId })),
+            getPredefinedFields: mockGetPredefinedFields,
           },
         },
       ],
@@ -112,6 +115,20 @@ describe('AllExceptionsFilter', () => {
         originalException: edgeCaseException,
         error: loggerInternalError,
       }),
+    );
+  });
+
+  it('should return null trace id field if there is none', () => {
+    const exception = new Error('Unknown error');
+    mockGetPredefinedFields.mockReturnValue(undefined);
+
+    // @ts-expect-error
+    filter.catch(exception, mockArgumentsHost);
+
+    expect(mockRes.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        traceId: null,
+      } satisfies Pick<DefaultErrorResponse, 'traceId'>),
     );
   });
 });

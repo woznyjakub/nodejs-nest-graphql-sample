@@ -11,9 +11,10 @@ async function bootstrap(): Promise<void> {
   dotenv.config();
   validateEnv(process.env);
 
-  const app = await NestFactory.create(AppModule, {
-    logger: new LoggerService(),
-  });
+  const app = await NestFactory.create(AppModule);
+
+  const logger = app.get(LoggerService);
+  app.useLogger(logger);
 
   const prefix = '/api';
   app.setGlobalPrefix(prefix);
