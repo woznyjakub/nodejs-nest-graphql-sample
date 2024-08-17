@@ -15,6 +15,8 @@ services:
     networks:
       - main
     restart: "unless-stopped"
+    depends_on:
+      - main-db
 
   ui-web:
     container_name: ui-web
@@ -32,6 +34,7 @@ services:
     restart: "unless-stopped"
 
   nginx:
+    container_name: nginx
     image: nginx:alpine
     ports:
       - "80:80"
@@ -43,6 +46,24 @@ services:
     networks:
       - main
 
+  main-db:
+    container_name: main-db
+    image: postgres:16.4-alpine3.20
+    env_file:
+      - ./api/.env.db # custom non-root user data
+      - ./infra/main-db/.env.db # root user data
+    ports:
+      - "5432:5432"
+    restart: "unless-stopped"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infra/main-db/init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - main
+
 networks:
   main:
     driver: bridge
+
+volumes:
+  postgres_data:
