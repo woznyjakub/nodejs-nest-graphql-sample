@@ -9,6 +9,11 @@ export type Config = {
   nodeEnv: NodeEnv;
   logLevel: LogLevel;
   logDir: string;
+  dbHost: string;
+  dbPort: number;
+  postgresDb: string;
+  dbAppUserName: string;
+  dbAppUserPassword: string;
 };
 
 type UnvalidatedEnv = Record<string, unknown>;

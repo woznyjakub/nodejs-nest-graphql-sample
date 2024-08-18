@@ -4,7 +4,8 @@
       "@common/*": ["src/common/*"],
       "@config/*": ["src/config/*"],
       "@context-storage/*": ["src/modules/context-storage/*"],
-      "@logger/*": ["src/modules/logger/*"]
+      "@logger/*": ["src/modules/logger/*"],
+      "@main-db/*": ["src/modules/main-db/*"]
     },
     "module": "commonjs",
     "declaration": true,

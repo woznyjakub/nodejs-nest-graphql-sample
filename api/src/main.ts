@@ -8,7 +8,9 @@ import { getConfig, validateEnv } from '@config/config';
 import { LoggerService } from '@logger/services/logger.service';
 
 async function bootstrap(): Promise<void> {
-  dotenv.config();
+  dotenv.config({
+    path: ['.env', '.env.db'],
+  });
   validateEnv(process.env);
 
   const app = await NestFactory.create(AppModule);

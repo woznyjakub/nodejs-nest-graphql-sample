@@ -9,6 +9,7 @@ import { RequestLoggerInterceptor } from '@common/interceptors/request-logger/re
 import { ContextStorageModule } from '@context-storage/context-storage.module';
 import { ContextStorageMiddleware } from '@context-storage/middleware/context-storage.middleware';
 import { LoggerModule } from '@logger/logger.module';
+import { MainDbModule } from '@main-db/main-db.module';
 
 const globalMiddlewares: Provider[] = [
   {
@@ -25,7 +26,7 @@ const globalInterceptors: Provider[] = [
 ];
 
 @Module({
-  imports: [LoggerModule, ContextStorageModule],
+  imports: [LoggerModule, ContextStorageModule, MainDbModule],
   controllers: [HelloWorldController],
   providers: [HelloWorldService, ...globalInterceptors, ...globalMiddlewares],
 })

@@ -32,4 +32,26 @@ export class EnvironmentVariables {
   @Expose()
   @IsString()
   LOG_DIR: string;
+
+  @Expose()
+  @IsString()
+  DB_HOST: string;
+
+  @Expose()
+  @IsNumber()
+  @Min(0)
+  @Max(65535)
+  DB_PORT: number;
+
+  @Expose()
+  @IsString()
+  POSTGRES_DB: string;
+
+  @Expose()
+  @IsString()
+  DB_APP_USER_NAME: string;
+
+  @Expose()
+  @IsString()
+  DB_APP_USER_PASSWORD: string;
 }

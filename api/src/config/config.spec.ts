@@ -10,6 +10,11 @@ describe('Config', () => {
         "nodeEnv",
         "logLevel",
         "logDir",
+        "dbHost",
+        "dbPort",
+        "postgresDb",
+        "dbAppUserName",
+        "dbAppUserPassword",
       ]
     `);
   });
