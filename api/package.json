@@ -19,7 +19,15 @@
     "test:cov": "vitest run --coverage",
     "test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "prepare": "cd .. && husky api/.husky"
+    "prepare": "cd .. && husky api/.husky",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "// @example": "pnpm main-db:migration:create ./src/modules/main-db/migrations/ExampleMigrationName",
+    "main-db:migration:create": "pnpm typeorm migration:create",
+    "main-db:migration:generate": "pnpm typeorm migration:generate -d ./src/modules/main-db/ormconfig.ts",
+    "main-db:migration:run": "pnpm typeorm migration:run -d ./src/modules/main-db/ormconfig.ts",
+    "main-db:migration:revert": "pnpm typeorm migration:revert -d ./src/modules/main-db/ormconfig.ts",
+    "main-db:migration:show": "pnpm typeorm migration:show -d ./src/modules/main-db/ormconfig.ts",
+    "schema:log": "pnpm typeorm schema:log -d ./src/modules/main-db/ormconfig.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

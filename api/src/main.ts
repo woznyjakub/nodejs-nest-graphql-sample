@@ -1,16 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import dotenv from 'dotenv';
 
 import { AppModule } from './app.module';
 
-import { getConfig, validateEnv } from '@config/config';
+import { getConfig, setupEnv, validateEnv } from '@config/config';
 import { LoggerService } from '@logger/services/logger.service';
 
 async function bootstrap(): Promise<void> {
-  dotenv.config({
-    path: ['.env', '.env.db'],
-  });
+  setupEnv();
   validateEnv(process.env);
 
   const app = await NestFactory.create(AppModule);

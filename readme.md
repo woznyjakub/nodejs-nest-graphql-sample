@@ -6,7 +6,7 @@
 - TypeScript
 - Nest.js
 - Docker
-- PostgreSQL (todo)
+- PostgreSQL
 - React.js
 - Tailwind CSS
 
@@ -15,6 +15,7 @@
 - SWC compiler (non-default in Nest.js)
 - PNPM package manager instead of NPM
 - Docker
+- DB module (PostgreSQL + TypeORM)
 - Nginx reverse proxy
 - CORS resolved by reverse proxy setting
 - .env handling and validation
@@ -32,13 +33,10 @@
 
 ### Todo Backend
 
-- Add traceId to logs
-- Integration test to verify if traceId works / context store is initialized
 - Redis cache
 - Mailer
 - DTO validation with class-transformer and class-validator
 - Authentication + user entity
-- DB service (PG + TypeORM)
 - Multer with file uploads to AWS S3
 - CI (GitHub or EC2 + Jenkins)
 - SSL

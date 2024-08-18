@@ -1,5 +1,6 @@
 import { plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
+import dotenv from 'dotenv';
 import { memoize, camelCase } from 'lodash';
 
 import { EnvironmentVariables, LogLevel, NodeEnv } from './env';
@@ -24,11 +25,17 @@ const transformEnv = (env: UnvalidatedEnv): EnvironmentVariables =>
     excludeExtraneousValues: true,
   });
 
+export const setupEnv = (): void => {
+  dotenv.config({
+    path: ['.env', '.env.db'],
+  });
+};
+
 export const validateEnv = (env: UnvalidatedEnv): EnvironmentVariables => {
   const transformedEnv = transformEnv(env);
   const errors = validateSync(transformedEnv, { skipMissingProperties: false });
 
-  if (errors.length > 0) {
+  if (errors.length) {
     throw new Error(errors.toString());
   }
   return transformedEnv;
