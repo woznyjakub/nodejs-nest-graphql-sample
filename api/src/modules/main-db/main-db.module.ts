@@ -17,7 +17,7 @@ export const createDbConfig = memoize((isLocal = false) => {
     username: dbAppUserName,
     password: dbAppUserPassword,
     entities: [join(process.cwd(), 'src', '**', '*.entity.ts')],
-    migrations: [join(process.cwd(), 'src', 'main-db', 'migrations', '*.ts')],
+    migrations: [join(process.cwd(), 'src', '**', 'main-db', 'migrations', '*.ts')],
   } satisfies TypeOrmModuleOptions;
 });
 

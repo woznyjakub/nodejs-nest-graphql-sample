@@ -37,7 +37,7 @@
 - Mailer
 - DTO validation with class-transformer and class-validator
 - Authentication + user entity
-- Multer with file uploads to AWS S3
+- Multer with file uploads to AWS S3 + setting nginx to handle uploads
 - CI (GitHub or EC2 + Jenkins)
 - SSL
 - Healthcheck module

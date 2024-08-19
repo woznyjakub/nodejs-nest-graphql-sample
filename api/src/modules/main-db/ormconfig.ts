@@ -2,12 +2,12 @@ import { DataSource } from 'typeorm';
 
 import { createDbConfig } from './main-db.module';
 
-import { setupEnv, validateEnv } from '@config/config';
+import { loadEnv, validateEnv } from '@config/config';
 
 // This file is owned by typeorm cli
 const setupDataSource = (): DataSource | void => {
   try {
-    setupEnv();
+    loadEnv();
     validateEnv(process.env);
 
     return new DataSource(createDbConfig(true));

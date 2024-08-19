@@ -3,11 +3,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
 
-import { getConfig, setupEnv, validateEnv } from '@config/config';
+import { getConfig, loadEnv, validateEnv } from '@config/config';
 import { LoggerService } from '@logger/services/logger.service';
 
 async function bootstrap(): Promise<void> {
-  setupEnv();
+  loadEnv();
   validateEnv(process.env);
 
   const app = await NestFactory.create(AppModule);

@@ -25,7 +25,7 @@ const transformEnv = (env: UnvalidatedEnv): EnvironmentVariables =>
     excludeExtraneousValues: true,
   });
 
-export const setupEnv = (): void => {
+export const loadEnv = (): void => {
   dotenv.config({
     path: ['.env', '.env.db'],
   });
