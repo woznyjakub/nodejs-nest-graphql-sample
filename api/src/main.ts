@@ -9,14 +9,14 @@ import { LoggerService } from '@logger/services/logger.service';
 async function bootstrap(): Promise<void> {
   loadEnv();
   validateEnv(process.env);
+  const { port, apiGlobalPrefix } = getConfig();
 
   const app = await NestFactory.create(AppModule);
 
   const logger = app.get(LoggerService);
   app.useLogger(logger);
 
-  const prefix = '/api';
-  app.setGlobalPrefix(prefix);
+  app.setGlobalPrefix(apiGlobalPrefix);
 
   app.enableCors({
     origin: ['http://localhost'],
@@ -30,9 +30,7 @@ async function bootstrap(): Promise<void> {
     .setDescription('Main backend API description')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup(`${prefix}/docs`, app, document);
-
-  const { port } = getConfig();
+  SwaggerModule.setup(`${apiGlobalPrefix}/docs`, app, document);
 
   await app.listen(port, '0.0.0.0');
 }

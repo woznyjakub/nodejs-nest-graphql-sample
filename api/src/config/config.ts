@@ -8,6 +8,7 @@ import { EnvironmentVariables, LogLevel, NodeEnv } from './env';
 export type Config = {
   port: number;
   nodeEnv: NodeEnv;
+  apiGlobalPrefix: string;
   logLevel: LogLevel;
   logDir: string;
   dbHost: string;

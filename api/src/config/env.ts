@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { IsEnum, IsNumber, IsString, Max, Min } from 'class-validator';
+import { IsEnum, IsNumber, IsString, Matches, Max, Min } from 'class-validator';
 
 export enum NodeEnv {
   Dev = 'development',
@@ -32,6 +32,13 @@ export class EnvironmentVariables {
   @Expose()
   @IsString()
   LOG_DIR: string;
+
+  @Expose()
+  @IsString()
+  // This regex is only run on app init
+  // eslint-disable-next-line security/detect-unsafe-regex
+  @Matches(/^\/\w{1,32}(?:\/\w{1,32}){0,8}(?<!\/)$/)
+  API_GLOBAL_PREFIX: string;
 
   @Expose()
   @IsString()
