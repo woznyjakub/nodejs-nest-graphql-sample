@@ -11,11 +11,6 @@ export type Config = {
   apiGlobalPrefix: string;
   logLevel: LogLevel;
   logDir: string;
-  dbHost: string;
-  dbPort: number;
-  postgresDb: string;
-  dbAppUserName: string;
-  dbAppUserPassword: string;
 };
 
 type UnvalidatedEnv = Record<string, unknown>;
@@ -26,13 +21,13 @@ const transformEnv = (env: UnvalidatedEnv): EnvironmentVariables =>
     excludeExtraneousValues: true,
   });
 
-export const loadEnv = (): void => {
+const loadEnv = (): void => {
   dotenv.config({
-    path: ['.env', '.env.db'],
+    path: ['.env'],
   });
 };
 
-export const validateEnv = (env: UnvalidatedEnv): EnvironmentVariables => {
+const validateEnv = (env: UnvalidatedEnv): EnvironmentVariables => {
   const transformedEnv = transformEnv(env);
   const errors = validateSync(transformedEnv, { skipMissingProperties: false });
 
@@ -43,7 +38,8 @@ export const validateEnv = (env: UnvalidatedEnv): EnvironmentVariables => {
 };
 
 export const getConfig = memoize((): Config => {
-  const transformedEnv = transformEnv(process.env);
+  loadEnv(); // moved loading env variables here after the issues with using getConfig inside decorator declarations
+  const transformedEnv = validateEnv(process.env);
 
   const camelCasedEnv = Object.entries(transformedEnv).reduce<Partial<Config>>((result, [k, v]) => {
     const newk = camelCase(k) as keyof Config;

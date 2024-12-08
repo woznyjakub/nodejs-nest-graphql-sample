@@ -2,12 +2,10 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
 
-import { getConfig, loadEnv, validateEnv } from '@config/config';
+import { getConfig } from '@config/config';
 import { LoggerService } from '@logger/services/logger.service';
 
 async function bootstrap(): Promise<void> {
-  loadEnv();
-  validateEnv(process.env);
   const { port, apiGlobalPrefix } = getConfig();
 
   const app = await NestFactory.create(AppModule);

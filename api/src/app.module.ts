@@ -1,5 +1,8 @@
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MiddlewareConsumer, Module, Provider } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { GraphQLModule } from '@nestjs/graphql';
 
 import { HelloWorldController } from './hello-world.controller';
 import { HelloWorldService } from './hello-world.service';
@@ -25,7 +28,19 @@ const globalInterceptors: Provider[] = [
 ];
 
 @Module({
-  imports: [LoggerModule, ContextStorageModule],
+  imports: [
+    LoggerModule,
+    ContextStorageModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      // playground: getConfig().nodeEnv === NodeEnv.Dev,
+      playground: false,
+      // include:
+      autoSchemaFile: './schema.gql',
+      sortSchema: true,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+    }),
+  ],
   controllers: [HelloWorldController],
   providers: [HelloWorldService, ...globalInterceptors, ...globalMiddlewares],
 })
