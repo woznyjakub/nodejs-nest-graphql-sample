@@ -7,7 +7,6 @@ SHELL := /bin/bash
 APP_NAME = starter-api
 APP_NAME := $(APP_NAME)
 NODE_APP_NAME = api
-REACT_APP_NAME = ui-web
 
 help:
 	@grep -E '^[1-9a-zA-Z_-]+:.*?## .*$$|(^#--)' $(MAKEFILE_LIST) \
@@ -43,6 +42,3 @@ remove: ## Remove the volumes
 
 watch-api: ## watch nodejs app logs
 	docker logs -f ${NODE_APP_NAME}
-
-watch-ui-web: ## watch nodejs app logs
-	docker logs -f ${REACT_APP_NAME}

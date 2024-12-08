@@ -18,7 +18,6 @@ export default defineConfig({
       '@config': resolve(__dirname, './src/config'),
       '@context-storage': resolve(__dirname, './src/modules/context-storage'),
       '@logger': resolve(__dirname, './src/modules/logger'),
-      '@main-db': resolve(__dirname, './src/modules/main-db'),
     },
   },
   plugins: [

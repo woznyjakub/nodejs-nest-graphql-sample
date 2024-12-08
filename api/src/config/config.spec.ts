@@ -11,11 +11,6 @@ describe('Config', () => {
         "logLevel",
         "logDir",
         "apiGlobalPrefix",
-        "dbHost",
-        "dbPort",
-        "postgresDb",
-        "dbAppUserName",
-        "dbAppUserPassword",
       ]
     `);
   });

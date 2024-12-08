@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
 
@@ -25,13 +24,6 @@ async function bootstrap(): Promise<void> {
     maxAge: 600,
   });
 
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('Nest.js + React.js Monorepo rich starter')
-    .setDescription('Main backend API description')
-    .build();
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup(`${apiGlobalPrefix}/docs`, app, document);
-
-  await app.listen(port, '0.0.0.0');
+  await app.listen(port);
 }
 void bootstrap();

@@ -11,17 +11,6 @@
       "restart": true,
       "address": "localhost",
       "skipFiles": ["<node_internals>/**"]
-    },
-    {
-      "type": "node",
-      "request": "attach",
-      "name": "ui-web (docker)",
-      "remoteRoot": "/app",
-      "localRoot": "${workspaceFolder}/ui-web",
-      "port": 9230,
-      "restart": true,
-      "address": "localhost",
-      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

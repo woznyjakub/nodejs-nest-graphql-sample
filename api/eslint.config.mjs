@@ -130,12 +130,4 @@ export default [
       'promise/valid-params': 'off',
     },
   },
-  {
-    // overwrite for typeorm cli owned files
-    files: ['**/main-db/migrations/*.ts', '**/main-db/ormconfig.ts'],
-    rules: {
-      'unicorn/filename-case': 'off',
-      'no-console': 'off',
-    },
-  },
 ];
