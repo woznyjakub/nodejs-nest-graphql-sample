@@ -123,11 +123,12 @@ export default [
   },
   {
     // overwrite for test files
-    files: ['**/*.test.ts', '**/*.spec.ts'],
+    files: ['**/*.test.ts', '**/*.spec.ts', '**/test/**/*.ts'],
     rules: {
       'max-lines-per-function': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       'promise/valid-params': 'off',
+      'sonarjs/no-duplicate-string': 'off',
     },
   },
 ];

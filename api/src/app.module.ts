@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 
 import { HelloWorldController } from './hello-world.controller';
 import { HelloWorldService } from './hello-world.service';
+import { SwapiModule } from './modules/swapi/swapi.module';
 
 import { AllExceptionsFilter } from '@common/filters/all-exceptions/all-exceptions.filter';
 import { RequestLoggerInterceptor } from '@common/interceptors/request-logger/request-logger.interceptor';
@@ -40,6 +41,7 @@ const globalInterceptors: Provider[] = [
       sortSchema: true,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
+    SwapiModule,
   ],
   controllers: [HelloWorldController],
   providers: [HelloWorldService, ...globalInterceptors, ...globalMiddlewares],
