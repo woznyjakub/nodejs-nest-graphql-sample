@@ -7,7 +7,7 @@ export class HelloWorldController {
   constructor(private readonly helloService: HelloWorldService) {}
 
   @Get('/hello')
-  getHello(): Promise<string> {
+  getHello(): string {
     return this.helloService.getHello();
   }
 }

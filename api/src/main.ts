@@ -24,4 +24,6 @@ async function bootstrap(): Promise<void> {
 
   await app.listen(port);
 }
-void bootstrap();
+
+// eslint-disable-next-line no-console
+void bootstrap().catch((error) => console.error(error));

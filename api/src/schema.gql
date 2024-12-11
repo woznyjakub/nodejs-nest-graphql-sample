@@ -1,0 +1,32 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  vehicle(id: Int!): Vehicle!
+  vehicles(page: Int!): Vehicles!
+}
+
+type Vehicle {
+  cargoCapacity: String!
+  consumables: String!
+  costInCredits: String!
+  crew: String!
+  films: [String!]!
+  length: String!
+  manufacturer: String!
+  maxAtmospheringSpeed: String!
+  model: String!
+  name: String!
+  passengers: String!
+  pilots: [String!]!
+  url: String!
+  vehicleClass: String!
+}
+
+type Vehicles {
+  count: Int!
+  next: String
+  previous: String
+  results: [Vehicle!]!
+}
