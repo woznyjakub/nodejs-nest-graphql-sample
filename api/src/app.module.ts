@@ -1,9 +1,10 @@
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { CacheModule } from '@nestjs/cache-manager';
+import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { MiddlewareConsumer, Module, Provider } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
+import { redisStore } from 'cache-manager-redis-yet';
 
 import { HelloWorldController } from './hello-world.controller';
 import { HelloWorldService } from './hello-world.service';
@@ -11,6 +12,7 @@ import { SwapiModule } from './modules/swapi/swapi.module';
 import { VehiclesModule } from './modules/vehicles/vehicles.module';
 
 import { AllExceptionsFilter } from '@common/filters/all-exceptions/all-exceptions.filter';
+import { getConfig } from '@config/config';
 import { ContextStorageModule } from '@context-storage/context-storage.module';
 import { ContextStorageMiddleware } from '@context-storage/middleware/context-storage.middleware';
 import { LoggerModule } from '@logger/logger.module';
@@ -39,9 +41,22 @@ const globalInterceptors: Provider[] = [];
       debug: true,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
-    CacheModule.register({
+    CacheModule.registerAsync({
       isGlobal: true,
-      ttl: 1000 * 3600 * 24, // 24h
+      useFactory: async () => {
+        const { cacheHost, cachePort } = getConfig();
+        const store = await redisStore({
+          socket: {
+            host: cacheHost,
+            port: cachePort,
+          },
+        });
+
+        return {
+          store: store as unknown as CacheStore,
+          ttl: 1000 * 3600 * 24, // 24h
+        };
+      },
     }),
   ],
   controllers: [HelloWorldController],

@@ -11,6 +11,8 @@ describe('Config', () => {
         "logLevel",
         "logDir",
         "apiGlobalPrefix",
+        "cacheHost",
+        "cachePort",
       ]
     `);
   });

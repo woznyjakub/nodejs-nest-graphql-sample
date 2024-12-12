@@ -39,4 +39,14 @@ export class EnvironmentVariables {
   // eslint-disable-next-line security/detect-unsafe-regex
   @Matches(/^\/\w{1,32}(?:\/\w{1,32}){0,8}(?<!\/)$/)
   API_GLOBAL_PREFIX: string;
+
+  @Expose()
+  @IsString()
+  CACHE_HOST: string;
+
+  @Expose()
+  @IsNumber()
+  @Min(0)
+  @Max(65535)
+  CACHE_PORT: number;
 }

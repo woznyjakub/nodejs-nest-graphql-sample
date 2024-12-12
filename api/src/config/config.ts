@@ -11,6 +11,8 @@ export type Config = {
   apiGlobalPrefix: string;
   logLevel: LogLevel;
   logDir: string;
+  cacheHost: string;
+  cachePort: number;
 };
 
 type UnvalidatedEnv = Record<string, unknown>;
