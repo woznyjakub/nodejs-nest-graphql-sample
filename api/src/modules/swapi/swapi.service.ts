@@ -5,6 +5,7 @@ import { validate } from 'class-validator';
 import { lastValueFrom } from 'rxjs';
 
 import { FilmResponse, FilmsResponse } from './dto/film';
+import { PlanetResponse, PlanetsResponse } from './dto/planet';
 import { StarshipResponse, StarshipsResponse } from './dto/starship';
 import { VehicleResponse, VehiclesResponse } from './dto/vehicle';
 
@@ -70,5 +71,13 @@ export class SwapiService {
 
   getStarships(page: number = 1): Promise<StarshipsResponse> {
     return this.getResource('starships', StarshipsResponse, undefined, page);
+  }
+
+  getPlanet(id: number): Promise<PlanetResponse> {
+    return this.getResource('planets', PlanetResponse, id);
+  }
+
+  getPlanets(page: number = 1): Promise<PlanetsResponse> {
+    return this.getResource('planets', PlanetsResponse, undefined, page);
   }
 }

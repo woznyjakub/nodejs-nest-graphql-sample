@@ -6,6 +6,8 @@ import { SwapiService } from './swapi.service';
 import {
   filmResponseMock,
   filmsResponseMock,
+  planetResponseMock,
+  planetsResponseMock,
   starshipResponseMock,
   starshipsResponseMock,
   vehicleResponseMock,
@@ -142,6 +144,44 @@ describe('SwapiService', () => {
       apiGetter.mockReturnValue(of({ data: wrongStarshipsData }));
 
       const result = swapiService.getStarships();
+
+      await expect(result).rejects.toThrow();
+    });
+  });
+
+  describe('getPlanet', () => {
+    it('should return valid planet data', async () => {
+      apiGetter.mockReturnValue(of({ data: planetResponseMock }));
+
+      const result = await swapiService.getPlanet(1);
+
+      expect(result).toEqual(planetResponseMock);
+    });
+
+    it('should throw an error for invalid planet data', async () => {
+      const wrongPlanetData = {};
+      apiGetter.mockReturnValue(of({ data: wrongPlanetData }));
+
+      const result = swapiService.getPlanet(1);
+
+      await expect(result).rejects.toThrow();
+    });
+  });
+
+  describe('getPlanets', () => {
+    it('should return valid planets data', async () => {
+      apiGetter.mockReturnValue(of({ data: planetsResponseMock }));
+
+      const result = await swapiService.getPlanets();
+
+      expect(result).toEqual(planetsResponseMock);
+    });
+
+    it('should throw an error for invalid planets data', async () => {
+      const wrongPlanetsData = {};
+      apiGetter.mockReturnValue(of({ data: wrongPlanetsData }));
+
+      const result = swapiService.getPlanets();
 
       await expect(result).rejects.toThrow();
     });
