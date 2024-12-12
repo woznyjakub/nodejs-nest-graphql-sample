@@ -1,5 +1,6 @@
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { CacheModule } from '@nestjs/cache-manager';
 import { MiddlewareConsumer, Module, Provider } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -37,6 +38,10 @@ const globalInterceptors: Provider[] = [];
       sortSchema: true,
       debug: true,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+    }),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 1000 * 3600 * 24, // 24h
     }),
   ],
   controllers: [HelloWorldController],
