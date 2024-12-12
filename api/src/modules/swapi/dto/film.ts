@@ -1,75 +1,70 @@
 import { Expose, Type } from 'class-transformer';
 import { IsArray, IsNumber, IsString, ValidateIf, ValidateNested } from 'class-validator';
 
-export class VehicleResponse {
+export class FilmResponse {
   @Expose()
   @IsString()
-  name: string;
+  title: 'The Phantom Menace';
+
+  @Expose()
+  @IsNumber()
+  episode_id: number;
 
   @Expose()
   @IsString()
-  model: string;
+  opening_crawl: string;
 
   @Expose()
   @IsString()
-  manufacturer: string;
+  director: 'George Lucas';
 
   @Expose()
   @IsString()
-  cost_in_credits: string;
+  producer: 'Rick McCallum';
 
   @Expose()
   @IsString()
-  length: string;
-
-  @Expose()
-  @IsString()
-  max_atmosphering_speed: string;
-
-  @Expose()
-  @IsString()
-  crew: string;
-
-  @Expose()
-  @IsString()
-  passengers: string;
-
-  @Expose()
-  @IsString()
-  cargo_capacity: string;
-
-  @Expose()
-  @IsString()
-  consumables: string;
-
-  @Expose()
-  @IsString()
-  vehicle_class: string;
+  release_date: '1999-05-19';
 
   @Expose()
   @IsArray()
   @IsString({ each: true })
-  pilots: string[];
+  characters: string[];
 
   @Expose()
   @IsArray()
   @IsString({ each: true })
-  films: string[];
+  planets: string[];
+
+  @Expose()
+  @IsArray()
+  @IsString({ each: true })
+  starships: string[];
+
+  @Expose()
+  @IsArray()
+  @IsString({ each: true })
+  vehicles: string[];
+
+  @Expose()
+  @IsArray()
+  @IsString({ each: true })
+  species: string[];
 
   @Expose()
   @IsString()
-  created: string;
+  created: '2014-12-19T16:52:55.740000Z';
 
   @Expose()
   @IsString()
-  edited: string;
+  edited: '2014-12-20T10:54:07.216000Z';
 
   @Expose()
   @IsString()
-  url: string;
+  url: 'https://swapi.dev/api/films/4/';
 }
 
-export class VehiclesResponse {
+export class FilmsResponse {
   @Expose()
   @IsNumber()
   count: number;
@@ -87,6 +82,6 @@ export class VehiclesResponse {
   @Expose()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => VehicleResponse)
-  results: VehicleResponse[];
+  @Type(() => FilmResponse)
+  results: FilmResponse[];
 }

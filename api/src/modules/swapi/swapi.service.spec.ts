@@ -3,7 +3,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
 import { SwapiService } from './swapi.service';
-import { vehicleResponseMock, vehiclesResponseMock } from './test/mocks';
+import {
+  filmResponseMock,
+  filmsResponseMock,
+  vehicleResponseMock,
+  vehiclesResponseMock,
+} from './test/mocks';
 
 describe('SwapiService', () => {
   let swapiService: SwapiService;
@@ -59,6 +64,44 @@ describe('SwapiService', () => {
       apiGetter.mockReturnValue(of({ data: wrongVehiclesData }));
 
       const result = swapiService.getVehicles();
+
+      await expect(result).rejects.toThrow();
+    });
+  });
+
+  describe('getFilm', () => {
+    it('should return valid Film data', async () => {
+      apiGetter.mockReturnValue(of({ data: filmResponseMock }));
+
+      const result = await swapiService.getFilm(1);
+
+      expect(result).toEqual(filmResponseMock);
+    });
+
+    it('should throw an error for invalid film data', async () => {
+      const wrongFilmData = {};
+      apiGetter.mockReturnValue(of({ data: wrongFilmData }));
+
+      const result = swapiService.getFilm(1);
+
+      await expect(result).rejects.toThrow();
+    });
+  });
+
+  describe('getFilms', () => {
+    it('should return valid films data', async () => {
+      apiGetter.mockReturnValue(of({ data: filmsResponseMock }));
+
+      const result = await swapiService.getFilms();
+
+      expect(result).toEqual(filmsResponseMock);
+    });
+
+    it('should throw an error for invalid films data', async () => {
+      const wrongFilmsData = {};
+      apiGetter.mockReturnValue(of({ data: wrongFilmsData }));
+
+      const result = swapiService.getFilms();
 
       await expect(result).rejects.toThrow();
     });

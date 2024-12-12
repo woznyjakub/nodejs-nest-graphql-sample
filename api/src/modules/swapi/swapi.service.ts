@@ -4,6 +4,7 @@ import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { lastValueFrom } from 'rxjs';
 
+import { FilmResponse, FilmsResponse } from './dto/film';
 import { VehicleResponse, VehiclesResponse } from './dto/vehicle';
 
 @Injectable()
@@ -52,5 +53,13 @@ export class SwapiService {
 
   getVehicles(page: number = 1): Promise<VehiclesResponse> {
     return this.getResource('vehicles', VehiclesResponse, undefined, page);
+  }
+
+  getFilm(id: number): Promise<FilmResponse> {
+    return this.getResource('films', FilmResponse, id);
+  }
+
+  getFilms(page: number = 1): Promise<FilmsResponse> {
+    return this.getResource('films', FilmsResponse, undefined, page);
   }
 }
