@@ -6,6 +6,8 @@ import { SwapiService } from './swapi.service';
 import {
   filmResponseMock,
   filmsResponseMock,
+  starshipResponseMock,
+  starshipsResponseMock,
   vehicleResponseMock,
   vehiclesResponseMock,
 } from './test/mocks';
@@ -70,7 +72,7 @@ describe('SwapiService', () => {
   });
 
   describe('getFilm', () => {
-    it('should return valid Film data', async () => {
+    it('should return valid film data', async () => {
       apiGetter.mockReturnValue(of({ data: filmResponseMock }));
 
       const result = await swapiService.getFilm(1);
@@ -102,6 +104,44 @@ describe('SwapiService', () => {
       apiGetter.mockReturnValue(of({ data: wrongFilmsData }));
 
       const result = swapiService.getFilms();
+
+      await expect(result).rejects.toThrow();
+    });
+  });
+
+  describe('getStarship', () => {
+    it('should return valid starship data', async () => {
+      apiGetter.mockReturnValue(of({ data: starshipResponseMock }));
+
+      const result = await swapiService.getStarship(1);
+
+      expect(result).toEqual(starshipResponseMock);
+    });
+
+    it('should throw an error for invalid starship data', async () => {
+      const wrongStarshipData = {};
+      apiGetter.mockReturnValue(of({ data: wrongStarshipData }));
+
+      const result = swapiService.getStarship(1);
+
+      await expect(result).rejects.toThrow();
+    });
+  });
+
+  describe('getStarships', () => {
+    it('should return valid starships data', async () => {
+      apiGetter.mockReturnValue(of({ data: starshipsResponseMock }));
+
+      const result = await swapiService.getStarships();
+
+      expect(result).toEqual(starshipsResponseMock);
+    });
+
+    it('should throw an error for invalid starships data', async () => {
+      const wrongStarshipsData = {};
+      apiGetter.mockReturnValue(of({ data: wrongStarshipsData }));
+
+      const result = swapiService.getStarships();
 
       await expect(result).rejects.toThrow();
     });
