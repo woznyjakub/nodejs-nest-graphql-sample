@@ -6,6 +6,7 @@ import { lastValueFrom } from 'rxjs';
 
 import { FilmResponse, FilmsResponse } from './dto/film';
 import { PlanetResponse, PlanetsResponse } from './dto/planet';
+import { SpeciesManyResponse, SpeciesResponse } from './dto/species';
 import { StarshipResponse, StarshipsResponse } from './dto/starship';
 import { VehicleResponse, VehiclesResponse } from './dto/vehicle';
 
@@ -79,5 +80,13 @@ export class SwapiService {
 
   getPlanets(page: number = 1): Promise<PlanetsResponse> {
     return this.getResource('planets', PlanetsResponse, undefined, page);
+  }
+
+  getSpecies(id: number): Promise<SpeciesResponse> {
+    return this.getResource('species', SpeciesResponse, id);
+  }
+
+  getSpeciesMany(page: number = 1): Promise<SpeciesManyResponse> {
+    return this.getResource('species', SpeciesManyResponse, undefined, page);
   }
 }

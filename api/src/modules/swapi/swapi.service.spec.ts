@@ -8,6 +8,8 @@ import {
   filmsResponseMock,
   planetResponseMock,
   planetsResponseMock,
+  speciesResponseMock,
+  spieciesManyResponseMock,
   starshipResponseMock,
   starshipsResponseMock,
   vehicleResponseMock,
@@ -182,6 +184,44 @@ describe('SwapiService', () => {
       apiGetter.mockReturnValue(of({ data: wrongPlanetsData }));
 
       const result = swapiService.getPlanets();
+
+      await expect(result).rejects.toThrow();
+    });
+  });
+
+  describe('getSpecies', () => {
+    it('should return valid spiecies data', async () => {
+      apiGetter.mockReturnValue(of({ data: speciesResponseMock }));
+
+      const result = await swapiService.getSpecies(1);
+
+      expect(result).toEqual(speciesResponseMock);
+    });
+
+    it('should throw an error for invalid spiecies data', async () => {
+      const wrongSpeciesData = {};
+      apiGetter.mockReturnValue(of({ data: wrongSpeciesData }));
+
+      const result = swapiService.getSpecies(1);
+
+      await expect(result).rejects.toThrow();
+    });
+  });
+
+  describe('getSpeciesMany', () => {
+    it('should return valid many spiecies data', async () => {
+      apiGetter.mockReturnValue(of({ data: spieciesManyResponseMock }));
+
+      const result = await swapiService.getSpeciesMany();
+
+      expect(result).toEqual(spieciesManyResponseMock);
+    });
+
+    it('should throw an error for invalid many spiecies data', async () => {
+      const wrongSpeciesData = {};
+      apiGetter.mockReturnValue(of({ data: wrongSpeciesData }));
+
+      const result = swapiService.getSpeciesMany();
 
       await expect(result).rejects.toThrow();
     });
