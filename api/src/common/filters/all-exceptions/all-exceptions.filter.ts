@@ -20,6 +20,13 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
     super();
   }
   catch(exception: unknown, host: ArgumentsHost): void {
+    // use default handler for non-http
+    if (host.getType() !== 'http') {
+      // @ts-ignore
+      this.logger.error(exception);
+      return;
+    }
+
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
     const traceId = this.ctxStorageService.getPredefinedFields()?.traceId ?? null;

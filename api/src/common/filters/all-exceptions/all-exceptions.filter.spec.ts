@@ -21,6 +21,7 @@ describe('AllExceptionsFilter', () => {
       getResponse: vi.fn(() => mockRes),
       getRequest: vi.fn(),
     }),
+    getType: vi.fn(() => 'http'),
   };
   const mockCurrDate = new Date('2024-07-01T12:00:00Z').toISOString();
   const mockGetPredefinedFields: Mock<ContextStorageService['getPredefinedFields']> = vi.fn(() => ({

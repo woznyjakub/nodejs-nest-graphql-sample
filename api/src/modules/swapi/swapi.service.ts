@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { lastValueFrom } from 'rxjs';
@@ -39,7 +39,10 @@ export class SwapiService {
 
       return resource;
     } catch (error) {
-      throw new Error(`Failed to get swapi resource (${name}). Error: ${error.message}`);
+      throw new HttpException(
+        `Failed to get swapi resource (${name}). Error: ${error.message}`,
+        error.status,
+      );
     }
   }
 
