@@ -10,6 +10,7 @@ import { HelloWorldController } from './hello-world.controller';
 import { HelloWorldService } from './hello-world.service';
 import { FilmsModule } from './modules/films/films.module';
 import { PlanetsModule } from './modules/planets/planets.module';
+import { SpeciesModule } from './modules/species/species.module';
 import { StarWarsCommonModule } from './modules/star-wars-common/star-wars-common.module';
 import { StarshipsModule } from './modules/starships/starships.module';
 import { SwapiModule } from './modules/swapi/swapi.module';
@@ -39,7 +40,7 @@ const globalInterceptors: Provider[] = [];
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: false,
-      include: [VehiclesModule, FilmsModule, StarshipsModule, PlanetsModule],
+      include: [VehiclesModule, FilmsModule, StarshipsModule, PlanetsModule, SpeciesModule],
       autoSchemaFile: './src/schema.gql',
       sortSchema: true,
       debug: true,
@@ -66,6 +67,7 @@ const globalInterceptors: Provider[] = [];
     StarWarsCommonModule,
     StarshipsModule,
     PlanetsModule,
+    SpeciesModule,
   ],
   controllers: [HelloWorldController],
   providers: [HelloWorldService, ...globalInterceptors, ...globalMiddlewares],

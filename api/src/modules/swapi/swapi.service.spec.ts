@@ -8,7 +8,7 @@ import {
   planetResponseMock,
   planetsResponseMock,
   speciesResponseMock,
-  spieciesManyResponseMock,
+  speciesManyResponseMock,
   starshipResponseMock,
   starshipsResponseMock,
   vehicleResponseMock,
@@ -211,11 +211,11 @@ describe('SwapiService', () => {
 
   describe('getSpeciesMany', () => {
     it('should return valid many spiecies data', async () => {
-      apiGetter.mockReturnValue(of({ data: spieciesManyResponseMock }));
+      apiGetter.mockReturnValue(of({ data: speciesManyResponseMock }));
 
       const result = await swapiService.getSpeciesMany();
 
-      expect(result).toEqual(spieciesManyResponseMock);
+      expect(result).toEqual(speciesManyResponseMock);
     });
 
     it('should throw an error for invalid many spiecies data', async () => {

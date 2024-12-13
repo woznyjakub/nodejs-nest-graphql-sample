@@ -51,10 +51,35 @@ type Query {
   films(page: Int!): Films!
   planet(id: Int!): Planet!
   planets(page: Int!): Planets!
+  species(id: Int!): Species!
+  speciesMany(page: Int!): SpeciesMany!
   starship(id: Int!): Starship!
   starships(page: Int!): Starships!
   vehicle(id: Int!): Vehicle!
   vehicles(page: Int!): Vehicles!
+}
+
+type Species {
+  averageHeight: String!
+  averageLifespan: String!
+  classification: String!
+  designation: String!
+  eyeColors: String!
+  films: [String!]!
+  hairColors: String!
+  homeworld: String
+  language: String!
+  name: String!
+  people: [String!]!
+  skinColors: String!
+  url: String!
+}
+
+type SpeciesMany {
+  count: Int!
+  next: String
+  previous: String
+  results: [Species!]!
 }
 
 type Starship {

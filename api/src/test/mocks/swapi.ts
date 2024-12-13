@@ -1319,7 +1319,7 @@ export const speciesResponseMock = {
   url: 'https://swapi.dev/api/species/2/',
 };
 
-export const spieciesManyResponseMock = {
+export const speciesManyResponseMock = {
   count: 37,
   next: 'https://swapi.dev/api/species/?page=2',
   previous: null,

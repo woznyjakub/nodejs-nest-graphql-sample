@@ -30,7 +30,7 @@ export class StarshipsService {
   }
 
   async findOne(id: number): Promise<Starship> {
-    const cacheKey = `swapi-starships-id-${id}`;
+    const cacheKey = `swapi-starship-id-${id}`;
 
     const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
       this.swapiService.getStarship(id),

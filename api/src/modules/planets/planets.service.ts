@@ -30,7 +30,7 @@ export class PlanetsService {
   }
 
   async findOne(id: number): Promise<Planet> {
-    const cacheKey = `swapi-planets-id-${id}`;
+    const cacheKey = `swapi-planet-id-${id}`;
 
     const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
       this.swapiService.getPlanet(id),

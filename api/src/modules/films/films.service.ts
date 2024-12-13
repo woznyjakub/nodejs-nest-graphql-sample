@@ -30,7 +30,7 @@ export class FilmsService {
   }
 
   async findOne(id: number): Promise<Film> {
-    const cacheKey = `swapi-films-id-${id}`;
+    const cacheKey = `swapi-film-id-${id}`;
 
     const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
       this.swapiService.getFilm(id),
