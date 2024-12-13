@@ -6,8 +6,6 @@ import { APP_FILTER } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { redisStore } from 'cache-manager-redis-yet';
 
-import { HelloWorldController } from './hello-world.controller';
-import { HelloWorldService } from './hello-world.service';
 import { FilmsModule } from './modules/films/films.module';
 import { PlanetsModule } from './modules/planets/planets.module';
 import { SpeciesModule } from './modules/species/species.module';
@@ -69,8 +67,7 @@ const globalInterceptors: Provider[] = [];
     PlanetsModule,
     SpeciesModule,
   ],
-  controllers: [HelloWorldController],
-  providers: [HelloWorldService, ...globalInterceptors, ...globalMiddlewares],
+  providers: [...globalInterceptors, ...globalMiddlewares],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer): void {
