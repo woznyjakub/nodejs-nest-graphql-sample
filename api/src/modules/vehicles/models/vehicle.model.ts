@@ -2,37 +2,37 @@ import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class Vehicle {
-  @Field()
+  @Field(() => String)
   name: string;
 
-  @Field()
+  @Field(() => String)
   model: string;
 
-  @Field()
+  @Field(() => String)
   manufacturer: string;
 
-  @Field()
+  @Field(() => String)
   costInCredits: string;
 
-  @Field()
+  @Field(() => String)
   length: string;
 
-  @Field()
+  @Field(() => String)
   maxAtmospheringSpeed: string;
 
-  @Field()
+  @Field(() => String)
   crew: string;
 
-  @Field()
+  @Field(() => String)
   passengers: string;
 
-  @Field()
+  @Field(() => String)
   cargoCapacity: string;
 
-  @Field()
+  @Field(() => String)
   consumables: string;
 
-  @Field()
+  @Field(() => String)
   vehicleClass: string;
 
   @Field(() => [String])
@@ -41,6 +41,6 @@ export class Vehicle {
   @Field(() => [String])
   films: string[];
 
-  @Field()
+  @Field(() => String)
   url: string;
 }
