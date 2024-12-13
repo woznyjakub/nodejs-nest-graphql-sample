@@ -24,9 +24,33 @@ type Films {
   results: [Film!]!
 }
 
+type Planet {
+  climate: String!
+  diameter: String!
+  films: [String!]!
+  gravity: String!
+  name: String!
+  orbitalPeriod: String!
+  population: String!
+  residents: [String!]!
+  rotationPeriod: String!
+  surfaceWater: String!
+  terrain: String!
+  url: String!
+}
+
+type Planets {
+  count: Int!
+  next: String
+  previous: String
+  results: [Planet!]!
+}
+
 type Query {
   film(id: Int!): Film!
   films(page: Int!): Films!
+  planet(id: Int!): Planet!
+  planets(page: Int!): Planets!
   starship(id: Int!): Starship!
   starships(page: Int!): Starships!
   vehicle(id: Int!): Vehicle!
