@@ -2,7 +2,6 @@ import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
-import { SwapiService } from './swapi.service';
 import {
   filmResponseMock,
   filmsResponseMock,
@@ -14,7 +13,9 @@ import {
   starshipsResponseMock,
   vehicleResponseMock,
   vehiclesResponseMock,
-} from './test/mocks';
+} from '../../test/mocks/swapi';
+
+import { SwapiService } from './swapi.service';
 
 describe('SwapiService', () => {
   let swapiService: SwapiService;

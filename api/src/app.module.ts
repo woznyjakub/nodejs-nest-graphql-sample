@@ -8,6 +8,7 @@ import { redisStore } from 'cache-manager-redis-yet';
 
 import { HelloWorldController } from './hello-world.controller';
 import { HelloWorldService } from './hello-world.service';
+import { FilmsModule } from './modules/films/films.module';
 import { StarWarsCommonModule } from './modules/star-wars-common/star-wars-common.module';
 import { SwapiModule } from './modules/swapi/swapi.module';
 import { VehiclesModule } from './modules/vehicles/vehicles.module';
@@ -36,7 +37,7 @@ const globalInterceptors: Provider[] = [];
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: false,
-      include: [VehiclesModule],
+      include: [VehiclesModule, FilmsModule],
       autoSchemaFile: './src/schema.gql',
       sortSchema: true,
       debug: true,
@@ -59,6 +60,7 @@ const globalInterceptors: Provider[] = [];
         };
       },
     }),
+    FilmsModule,
     StarWarsCommonModule,
   ],
   controllers: [HelloWorldController],

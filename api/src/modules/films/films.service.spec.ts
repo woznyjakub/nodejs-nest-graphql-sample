@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { vehicleResponseMock, vehiclesResponseMock } from '../../test/mocks/swapi';
+import { filmResponseMock, filmsResponseMock } from '../../test/mocks/swapi';
 import { StarWarsCommonService } from '../star-wars-common/star-wars-common.service';
 import { SwapiService } from '../swapi/swapi.service';
 
-import { VehiclesService } from './vehicles.service';
+import { FilmsService } from './films.service';
 
-describe('VehiclesService', () => {
-  let vehiclesService: VehiclesService;
+describe('FilmsService', () => {
+  let filmsService: FilmsService;
 
   const mockFetchWithCaching = vi.fn();
 
@@ -20,35 +20,35 @@ describe('VehiclesService', () => {
             fetchWithCaching: mockFetchWithCaching,
           },
         },
-        VehiclesService,
+        FilmsService,
         {
           provide: SwapiService,
           useValue: {
-            getVehicle: vi.fn(),
-            getVehicles: vi.fn(),
+            getFilm: vi.fn(),
+            getFilms: vi.fn(),
           },
         },
       ],
     }).compile();
 
-    vehiclesService = module.get<VehiclesService>(VehiclesService);
+    filmsService = module.get<FilmsService>(FilmsService);
   });
 
-  describe('single vehicle data', () => {
+  describe('single film data', () => {
     it('should return mapped data', async () => {
-      mockFetchWithCaching.mockReturnValue(vehicleResponseMock);
+      mockFetchWithCaching.mockReturnValue(filmResponseMock);
 
-      const result = await vehiclesService.findOne(1);
+      const result = await filmsService.findOne(1);
 
       expect(result).toMatchSnapshot();
     });
   });
 
-  describe('multiple vehicles data', () => {
+  describe('multiple films data', () => {
     it('should return mapped data when', async () => {
-      mockFetchWithCaching.mockReturnValue(vehiclesResponseMock);
+      mockFetchWithCaching.mockReturnValue(filmsResponseMock);
 
-      const result = await vehiclesService.findAll(1);
+      const result = await filmsService.findAll(1);
 
       expect(result).toMatchSnapshot();
     });

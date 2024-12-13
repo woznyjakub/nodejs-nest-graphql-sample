@@ -2,7 +2,31 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Film {
+  characters: [String!]!
+  director: String!
+  episodeId: Int!
+  openingCrawl: String!
+  planets: [String!]!
+  producer: String!
+  releaseDate: String!
+  species: [String!]!
+  starships: [String!]!
+  title: String!
+  url: String!
+  vehicles: [String!]!
+}
+
+type Films {
+  count: Int!
+  next: String
+  previous: String
+  results: [Film!]!
+}
+
 type Query {
+  film(id: Int!): Film!
+  films(page: Int!): Films!
   vehicle(id: Int!): Vehicle!
   vehicles(page: Int!): Vehicles!
 }
