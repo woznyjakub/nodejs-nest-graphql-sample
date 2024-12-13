@@ -55,4 +55,24 @@ export class FilmsService {
       url: film.url,
     };
   }
+
+  async getUniqueWordsCount(): Promise<[string, number][]> {
+    const { results: films } = await this.swapiService.getFilms();
+
+    const wordCounts: Map<string, number> = new Map();
+
+    films.forEach((film) => {
+      const words = film.opening_crawl
+        .split(/\W/)
+        .filter((word) => word.trim() !== '')
+        .map((word) => word.toLowerCase());
+
+      words.forEach((word) => {
+        const currentCount = wordCounts.get(word) || 0;
+        wordCounts.set(word, currentCount + 1);
+      });
+    });
+
+    return Array.from(wordCounts).sort((a, b) => b[1] - a[1]);
+  }
 }

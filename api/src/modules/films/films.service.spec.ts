@@ -11,6 +11,8 @@ describe('FilmsService', () => {
 
   const mockFetchWithCaching = vi.fn();
 
+  const mockGetFilms = vi.fn();
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -25,7 +27,7 @@ describe('FilmsService', () => {
           provide: SwapiService,
           useValue: {
             getFilm: vi.fn(),
-            getFilms: vi.fn(),
+            getFilms: mockGetFilms,
           },
         },
       ],
@@ -45,10 +47,20 @@ describe('FilmsService', () => {
   });
 
   describe('multiple films data', () => {
-    it('should return mapped data when', async () => {
+    it('should return mapped data', async () => {
       mockFetchWithCaching.mockReturnValue(filmsResponseMock);
 
       const result = await filmsService.findAll(1);
+
+      expect(result).toMatchSnapshot();
+    });
+  });
+
+  describe('getUniqueWordsCount', () => {
+    it('should return unique words count', async () => {
+      mockGetFilms.mockReturnValue(filmsResponseMock);
+
+      const result = await filmsService.getUniqueWordsCount();
 
       expect(result).toMatchSnapshot();
     });

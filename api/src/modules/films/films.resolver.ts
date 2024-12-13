@@ -6,15 +6,20 @@ import { FilmsService } from './films.service';
 
 @Resolver(() => Film)
 export class FilmsResolver {
-  constructor(private readonly vehiclesService: FilmsService) {}
+  constructor(private readonly filmsService: FilmsService) {}
 
   @Query(() => Films, { name: 'films' })
   findAll(@Args('page', { type: () => Int }) page: number): Promise<Films> {
-    return this.vehiclesService.findAll(page);
+    return this.filmsService.findAll(page);
   }
 
   @Query(() => Film, { name: 'film' })
   findOne(@Args('id', { type: () => Int }) id: number): Promise<Film> {
-    return this.vehiclesService.findOne(id);
+    return this.filmsService.findOne(id);
+  }
+
+  @Query(() => [[String, Number]], { name: 'filmsPlotDescriptionUniqueWordsCount' })
+  getUniqueWordsCount(): Promise<[string, number][]> {
+    return this.filmsService.getUniqueWordsCount();
   }
 }

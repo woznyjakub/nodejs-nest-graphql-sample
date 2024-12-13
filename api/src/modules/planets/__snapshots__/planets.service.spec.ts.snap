@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PlanetsService > multiple planets data > should return mapped data when 1`] = `
+exports[`PlanetsService > multiple planets data > should return mapped data 1`] = `
 {
   "count": 60,
   "next": "https://swapi.dev/api/planets/?page=2",

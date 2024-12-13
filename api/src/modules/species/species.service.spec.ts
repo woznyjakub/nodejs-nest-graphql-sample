@@ -45,7 +45,7 @@ describe('SpeciesService', () => {
   });
 
   describe('multiple speciesMany data', () => {
-    it('should return mapped data when', async () => {
+    it('should return mapped data', async () => {
       mockFetchWithCaching.mockReturnValue(speciesManyResponseMock);
 
       const result = await speciesManyService.findAll(1);

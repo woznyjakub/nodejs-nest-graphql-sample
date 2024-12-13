@@ -45,7 +45,7 @@ describe('PlanetsService', () => {
   });
 
   describe('multiple planets data', () => {
-    it('should return mapped data when', async () => {
+    it('should return mapped data', async () => {
       mockFetchWithCaching.mockReturnValue(planetsResponseMock);
 
       const result = await planetsService.findAll(1);

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`VehiclesService > multiple vehicles data > should return mapped data when 1`] = `
+exports[`VehiclesService > multiple vehicles data > should return mapped data 1`] = `
 {
   "count": 39,
   "next": "https://swapi.dev/api/vehicles/?page=2",

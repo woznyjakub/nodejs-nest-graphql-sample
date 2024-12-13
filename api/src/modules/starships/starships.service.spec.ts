@@ -45,7 +45,7 @@ describe('StarshipsService', () => {
   });
 
   describe('multiple starships data', () => {
-    it('should return mapped data when', async () => {
+    it('should return mapped data', async () => {
       mockFetchWithCaching.mockReturnValue(starshipsResponseMock);
 
       const result = await starshipsService.findAll(1);

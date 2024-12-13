@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SpeciesService > multiple speciesMany data > should return mapped data when 1`] = `
+exports[`SpeciesService > multiple speciesMany data > should return mapped data 1`] = `
 {
   "count": 37,
   "next": "https://swapi.dev/api/species/?page=2",

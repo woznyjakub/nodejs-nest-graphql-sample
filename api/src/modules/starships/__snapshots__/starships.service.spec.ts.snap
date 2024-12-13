@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`StarshipsService > multiple starships data > should return mapped data when 1`] = `
+exports[`StarshipsService > multiple starships data > should return mapped data 1`] = `
 {
   "count": 36,
   "next": "https://swapi.dev/api/starships/?page=2",

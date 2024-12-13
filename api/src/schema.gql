@@ -49,6 +49,7 @@ type Planets {
 type Query {
   film(id: Int!): Film!
   films(page: Int!): Films!
+  filmsPlotDescriptionUniqueWordsCount: [[String!]!]!
   planet(id: Int!): Planet!
   planets(page: Int!): Planets!
   species(id: Int!): Species!

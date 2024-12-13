@@ -45,7 +45,7 @@ describe('VehiclesService', () => {
   });
 
   describe('multiple vehicles data', () => {
-    it('should return mapped data when', async () => {
+    it('should return mapped data', async () => {
       mockFetchWithCaching.mockReturnValue(vehiclesResponseMock);
 
       const result = await vehiclesService.findAll(1);
