@@ -8,6 +8,7 @@ import { redisStore } from 'cache-manager-redis-yet';
 
 import { HelloWorldController } from './hello-world.controller';
 import { HelloWorldService } from './hello-world.service';
+import { StarWarsCommonModule } from './modules/star-wars-common/star-wars-common.module';
 import { SwapiModule } from './modules/swapi/swapi.module';
 import { VehiclesModule } from './modules/vehicles/vehicles.module';
 
@@ -58,6 +59,7 @@ const globalInterceptors: Provider[] = [];
         };
       },
     }),
+    StarWarsCommonModule,
   ],
   controllers: [HelloWorldController],
   providers: [HelloWorldService, ...globalInterceptors, ...globalMiddlewares],

@@ -1,7 +1,6 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable } from '@nestjs/common';
-import { Cache } from 'cache-manager';
+import { Injectable } from '@nestjs/common';
 
+import { StarWarsCommonService } from '../star-wars-common/star-wars-common.service';
 import { VehicleResponse } from '../swapi/dto/vehicle';
 import { SwapiService } from '../swapi/swapi.service';
 
@@ -11,14 +10,14 @@ import { Vehicles } from './models/vehicles.model';
 @Injectable()
 export class VehiclesService {
   constructor(
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly swapiService: SwapiService,
+    private readonly swCommonService: StarWarsCommonService,
   ) {}
 
   async findAll(page: number): Promise<Vehicles> {
     const cacheKey = `swapi-vehicles-page-${page}`;
 
-    const swapiData = await this.getFromSwapiOrCache(cacheKey, () =>
+    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
       this.swapiService.getVehicles(page),
     );
 
@@ -33,26 +32,11 @@ export class VehiclesService {
   async findOne(id: number): Promise<Vehicle> {
     const cacheKey = `swapi-vehicle-id-${id}`;
 
-    const swapiData = await this.getFromSwapiOrCache(cacheKey, () =>
+    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
       this.swapiService.getVehicle(id),
     );
 
     return this.mapSingleVehicle(swapiData);
-  }
-
-  private async getFromSwapiOrCache<T extends object>(
-    cacheKey: string,
-    getterFn: () => Promise<T>,
-  ): Promise<T> {
-    const cachedData = await this.cacheManager.get<T>(cacheKey);
-    if (cachedData) {
-      return cachedData;
-    }
-
-    const data = await getterFn();
-    await this.cacheManager.set(cacheKey, data);
-
-    return data;
   }
 
   private mapSingleVehicle(vehicle: VehicleResponse): Vehicle {

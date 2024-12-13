@@ -1,6 +1,7 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { HttpModule } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { StarWarsCommonService } from '../star-wars-common/star-wars-common.service';
 import { SwapiService } from '../swapi/swapi.service';
 
 import { mappedVehicleMock, mappedVehiclesMock, vehicleMock, vehiclesMock } from './test/mocks';
@@ -9,30 +10,20 @@ import { VehiclesService } from './vehicles.service';
 describe('VehiclesService', () => {
   let service: VehiclesService;
 
-  const mockGetVehicle = vi.fn();
-  const mockGetVehicles = vi.fn();
-
-  const mockGetFromCache = vi.fn();
-  const mockSetCachedValue = vi.fn();
+  const mockFetchWithCaching = vi.fn();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [HttpModule],
       providers: [
         {
-          provide: CACHE_MANAGER,
+          provide: StarWarsCommonService,
           useValue: {
-            get: mockGetFromCache,
-            set: mockSetCachedValue,
-          },
-        },
-        {
-          provide: SwapiService,
-          useValue: {
-            getVehicle: mockGetVehicle,
-            getVehicles: mockGetVehicles,
+            fetchWithCaching: mockFetchWithCaching,
           },
         },
         VehiclesService,
+        SwapiService,
       ],
     }).compile();
 
@@ -40,17 +31,8 @@ describe('VehiclesService', () => {
   });
 
   describe('single vehicle data', () => {
-    it('should return mapped data when not cached', async () => {
-      mockGetVehicle.mockReturnValue(vehicleMock);
-
-      const result = await service.findOne(1);
-
-      expect(result).toEqual(mappedVehicleMock);
-    });
-
-    it('should return mapped data when cached', async () => {
-      mockGetVehicle.mockReturnValue(undefined);
-      mockGetFromCache.mockReturnValue(vehicleMock);
+    it('should return mapped data', async () => {
+      mockFetchWithCaching.mockReturnValue(vehicleMock);
 
       const result = await service.findOne(1);
 
@@ -59,17 +41,8 @@ describe('VehiclesService', () => {
   });
 
   describe('multiple vehicles data', () => {
-    it('should return mapped data when not cached', async () => {
-      mockGetVehicles.mockReturnValue(vehiclesMock);
-
-      const result = await service.findAll(1);
-
-      expect(result).toEqual(mappedVehiclesMock);
-    });
-
-    it('should return mapped data when cached', async () => {
-      mockGetVehicles.mockReturnValue(undefined);
-      mockGetFromCache.mockReturnValue(vehiclesMock);
+    it('should return mapped data when', async () => {
+      mockFetchWithCaching.mockReturnValue(vehiclesMock);
 
       const result = await service.findAll(1);
 
