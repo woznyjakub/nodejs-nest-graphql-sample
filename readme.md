@@ -35,9 +35,7 @@ make up
 
 install local version of node_modules
 
-```
-cd /api
-```
+(in the root directory)
 
 ```
 pnpm i
