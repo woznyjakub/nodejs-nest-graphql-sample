@@ -13,6 +13,7 @@ import {
   starshipsResponseMock,
   vehicleResponseMock,
   vehiclesResponseMock,
+  peopleResponseMock,
 } from '../../test/mocks/swapi';
 
 import { SwapiService } from './swapi.service';
@@ -223,6 +224,25 @@ describe('SwapiService', () => {
       apiGetter.mockReturnValue(of({ data: wrongSpeciesData }));
 
       const result = swapiService.getSpeciesMany();
+
+      await expect(result).rejects.toThrow();
+    });
+  });
+
+  describe('getPeople', () => {
+    it('should return valid people data', async () => {
+      apiGetter.mockReturnValue(of({ data: peopleResponseMock }));
+
+      const result = await swapiService.getPeople();
+
+      expect(result).toEqual(peopleResponseMock);
+    });
+
+    it('should throw an error for invalid people data', async () => {
+      const wrongPeopleData = {};
+      apiGetter.mockReturnValue(of({ data: wrongPeopleData }));
+
+      const result = swapiService.getPeople();
 
       await expect(result).rejects.toThrow();
     });
