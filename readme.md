@@ -1,4 +1,4 @@
-# Node.js Star Wars API GraphQL API
+# Node.js Star Wars GraphQL API
 
 A simple GraphQL API built with Node.js that retrieves data from the [Star Wars API (SWAPI)](https://swapi.dev) and allows basic operations on the data.
 
