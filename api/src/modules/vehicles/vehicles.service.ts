@@ -15,10 +15,9 @@ export class VehiclesService {
   ) {}
 
   async findAll(page: number): Promise<Vehicles> {
-    const cacheKey = `swapi-vehicles-page-${page}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getVehicles(page),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getVehiclesCacheKey(page),
+      () => this.swapiService.getVehicles(page),
     );
 
     return {
@@ -30,10 +29,9 @@ export class VehiclesService {
   }
 
   async findOne(id: number): Promise<Vehicle> {
-    const cacheKey = `swapi-vehicle-id-${id}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getVehicle(id),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getVehicleCacheKey(id),
+      () => this.swapiService.getVehicle(id),
     );
 
     return this.mapSingleVehicle(swapiData);

@@ -15,10 +15,9 @@ export class SpeciesService {
   ) {}
 
   async findAll(page: number): Promise<SpeciesMany> {
-    const cacheKey = `swapi-speciesMany-page-${page}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getSpeciesMany(page),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getSpeciesManyCacheKey(page),
+      () => this.swapiService.getSpeciesMany(page),
     );
 
     return {
@@ -30,10 +29,9 @@ export class SpeciesService {
   }
 
   async findOne(id: number): Promise<Species> {
-    const cacheKey = `swapi-species-id-${id}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getSpecies(id),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getSpeciesCacheKey(id),
+      () => this.swapiService.getSpecies(id),
     );
 
     return this.mapSingleSpecies(swapiData);

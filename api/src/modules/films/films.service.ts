@@ -15,10 +15,9 @@ export class FilmsService {
   ) {}
 
   async findAll(page: number): Promise<Films> {
-    const cacheKey = `swapi-films-page-${page}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getFilms(page),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getFilmsCacheKey(page),
+      () => this.swapiService.getFilms(page),
     );
 
     return {
@@ -30,10 +29,9 @@ export class FilmsService {
   }
 
   async findOne(id: number): Promise<Film> {
-    const cacheKey = `swapi-film-id-${id}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getFilm(id),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getFilmCacheKey(id),
+      () => this.swapiService.getFilm(id),
     );
 
     return this.mapSingleFilm(swapiData);
@@ -57,7 +55,10 @@ export class FilmsService {
   }
 
   async getUniqueWordsCount(): Promise<[string, number][]> {
-    const { results: films } = await this.swapiService.getFilms();
+    const { results: films } = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getFilmsCacheKey(1),
+      () => this.swapiService.getFilms(),
+    );
 
     const wordCounts: Map<string, number> = new Map();
 

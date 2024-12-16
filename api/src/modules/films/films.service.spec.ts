@@ -11,7 +11,8 @@ describe('FilmsService', () => {
 
   const mockFetchWithCaching = vi.fn();
 
-  const mockGetFilms = vi.fn();
+  const mockGetFilmCacheKey = vi.fn();
+  const mockGetFilmsCacheKey = vi.fn();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -20,6 +21,8 @@ describe('FilmsService', () => {
           provide: StarWarsCommonService,
           useValue: {
             fetchWithCaching: mockFetchWithCaching,
+            getFilmCacheKey: mockGetFilmCacheKey,
+            getFilmsCacheKey: mockGetFilmsCacheKey,
           },
         },
         FilmsService,
@@ -27,7 +30,7 @@ describe('FilmsService', () => {
           provide: SwapiService,
           useValue: {
             getFilm: vi.fn(),
-            getFilms: mockGetFilms,
+            getFilms: vi.fn(),
           },
         },
       ],
@@ -38,27 +41,31 @@ describe('FilmsService', () => {
 
   describe('single film data', () => {
     it('should return mapped data', async () => {
+      const mockId = 22;
       mockFetchWithCaching.mockReturnValue(filmResponseMock);
 
-      const result = await filmsService.findOne(1);
+      const result = await filmsService.findOne(mockId);
 
+      expect(mockGetFilmCacheKey).toHaveBeenCalledWith(mockId);
       expect(result).toMatchSnapshot();
     });
   });
 
   describe('multiple films data', () => {
     it('should return mapped data', async () => {
+      const mockPage = 6;
       mockFetchWithCaching.mockReturnValue(filmsResponseMock);
 
-      const result = await filmsService.findAll(1);
+      const result = await filmsService.findAll(mockPage);
 
+      expect(mockGetFilmsCacheKey).toHaveBeenCalledWith(mockPage);
       expect(result).toMatchSnapshot();
     });
   });
 
   describe('getUniqueWordsCount', () => {
     it('should return unique words count', async () => {
-      mockGetFilms.mockReturnValue(filmsResponseMock);
+      mockFetchWithCaching.mockReturnValue(filmsResponseMock);
 
       const result = await filmsService.getUniqueWordsCount();
 

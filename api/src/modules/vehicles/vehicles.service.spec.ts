@@ -11,6 +11,9 @@ describe('VehiclesService', () => {
 
   const mockFetchWithCaching = vi.fn();
 
+  const mockGetVehicleCacheKey = vi.fn();
+  const mockGetVehiclesCacheKey = vi.fn();
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -18,6 +21,8 @@ describe('VehiclesService', () => {
           provide: StarWarsCommonService,
           useValue: {
             fetchWithCaching: mockFetchWithCaching,
+            getVehicleCacheKey: mockGetVehicleCacheKey,
+            getVehiclesCacheKey: mockGetVehiclesCacheKey,
           },
         },
         VehiclesService,
@@ -36,20 +41,24 @@ describe('VehiclesService', () => {
 
   describe('single vehicle data', () => {
     it('should return mapped data', async () => {
+      const mockId = 22;
       mockFetchWithCaching.mockReturnValue(vehicleResponseMock);
 
-      const result = await vehiclesService.findOne(1);
+      const result = await vehiclesService.findOne(mockId);
 
+      expect(mockGetVehicleCacheKey).toHaveBeenCalledWith(mockId);
       expect(result).toMatchSnapshot();
     });
   });
 
   describe('multiple vehicles data', () => {
     it('should return mapped data', async () => {
+      const mockPage = 6;
       mockFetchWithCaching.mockReturnValue(vehiclesResponseMock);
 
-      const result = await vehiclesService.findAll(1);
+      const result = await vehiclesService.findAll(mockPage);
 
+      expect(mockGetVehiclesCacheKey).toHaveBeenCalledWith(mockPage);
       expect(result).toMatchSnapshot();
     });
   });

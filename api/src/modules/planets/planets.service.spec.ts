@@ -11,6 +11,9 @@ describe('PlanetsService', () => {
 
   const mockFetchWithCaching = vi.fn();
 
+  const mockGetPlanetCacheKey = vi.fn();
+  const mockGetPlanetsCacheKey = vi.fn();
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -18,6 +21,8 @@ describe('PlanetsService', () => {
           provide: StarWarsCommonService,
           useValue: {
             fetchWithCaching: mockFetchWithCaching,
+            getPlanetCacheKey: mockGetPlanetCacheKey,
+            getPlanetsCacheKey: mockGetPlanetsCacheKey,
           },
         },
         PlanetsService,
@@ -36,20 +41,24 @@ describe('PlanetsService', () => {
 
   describe('single planet data', () => {
     it('should return mapped data', async () => {
+      const mockId = 22;
       mockFetchWithCaching.mockReturnValue(planetResponseMock);
 
-      const result = await planetsService.findOne(1);
+      const result = await planetsService.findOne(mockId);
 
+      expect(mockGetPlanetCacheKey).toHaveBeenCalledWith(mockId);
       expect(result).toMatchSnapshot();
     });
   });
 
   describe('multiple planets data', () => {
     it('should return mapped data', async () => {
+      const mockPage = 6;
       mockFetchWithCaching.mockReturnValue(planetsResponseMock);
 
-      const result = await planetsService.findAll(1);
+      const result = await planetsService.findAll(mockPage);
 
+      expect(mockGetPlanetsCacheKey).toHaveBeenCalledWith(mockPage);
       expect(result).toMatchSnapshot();
     });
   });

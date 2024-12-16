@@ -15,10 +15,9 @@ export class PlanetsService {
   ) {}
 
   async findAll(page: number): Promise<Planets> {
-    const cacheKey = `swapi-planets-page-${page}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getPlanets(page),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getPlanetsCacheKey(page),
+      () => this.swapiService.getPlanets(page),
     );
 
     return {
@@ -30,10 +29,9 @@ export class PlanetsService {
   }
 
   async findOne(id: number): Promise<Planet> {
-    const cacheKey = `swapi-planet-id-${id}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getPlanet(id),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getPlanetCacheKey(id),
+      () => this.swapiService.getPlanet(id),
     );
 
     return this.mapSinglePlanet(swapiData);

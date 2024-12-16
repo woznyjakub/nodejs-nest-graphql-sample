@@ -11,6 +11,9 @@ describe('SpeciesService', () => {
 
   const mockFetchWithCaching = vi.fn();
 
+  const mockGetSpeciesCacheKey = vi.fn();
+  const mockGetSpeciesManyCacheKey = vi.fn();
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -18,6 +21,8 @@ describe('SpeciesService', () => {
           provide: StarWarsCommonService,
           useValue: {
             fetchWithCaching: mockFetchWithCaching,
+            getSpeciesCacheKey: mockGetSpeciesCacheKey,
+            getSpeciesManyCacheKey: mockGetSpeciesManyCacheKey,
           },
         },
         SpeciesService,
@@ -36,20 +41,24 @@ describe('SpeciesService', () => {
 
   describe('single species data', () => {
     it('should return mapped data', async () => {
+      const mockId = 22;
       mockFetchWithCaching.mockReturnValue(speciesResponseMock);
 
-      const result = await speciesManyService.findOne(1);
+      const result = await speciesManyService.findOne(mockId);
 
+      expect(mockGetSpeciesCacheKey).toHaveBeenCalledWith(mockId);
       expect(result).toMatchSnapshot();
     });
   });
 
   describe('multiple speciesMany data', () => {
     it('should return mapped data', async () => {
+      const mockPage = 6;
       mockFetchWithCaching.mockReturnValue(speciesManyResponseMock);
 
-      const result = await speciesManyService.findAll(1);
+      const result = await speciesManyService.findAll(mockPage);
 
+      expect(mockGetSpeciesManyCacheKey).toHaveBeenCalledWith(mockPage);
       expect(result).toMatchSnapshot();
     });
   });

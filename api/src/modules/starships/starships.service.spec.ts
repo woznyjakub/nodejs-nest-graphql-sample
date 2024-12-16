@@ -11,6 +11,9 @@ describe('StarshipsService', () => {
 
   const mockFetchWithCaching = vi.fn();
 
+  const mockGetStarshipCacheKey = vi.fn();
+  const mockGetStarshipsCacheKey = vi.fn();
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -18,6 +21,8 @@ describe('StarshipsService', () => {
           provide: StarWarsCommonService,
           useValue: {
             fetchWithCaching: mockFetchWithCaching,
+            getStarshipCacheKey: mockGetStarshipCacheKey,
+            getStarshipsCacheKey: mockGetStarshipsCacheKey,
           },
         },
         StarshipsService,
@@ -36,20 +41,24 @@ describe('StarshipsService', () => {
 
   describe('single starship data', () => {
     it('should return mapped data', async () => {
+      const mockId = 22;
       mockFetchWithCaching.mockReturnValue(starshipResponseMock);
 
-      const result = await starshipsService.findOne(1);
+      const result = await starshipsService.findOne(mockId);
 
+      expect(mockGetStarshipCacheKey).toHaveBeenCalledWith(mockId);
       expect(result).toMatchSnapshot();
     });
   });
 
   describe('multiple starships data', () => {
     it('should return mapped data', async () => {
+      const mockPage = 6;
       mockFetchWithCaching.mockReturnValue(starshipsResponseMock);
 
-      const result = await starshipsService.findAll(1);
+      const result = await starshipsService.findAll(mockPage);
 
+      expect(mockGetStarshipsCacheKey).toHaveBeenCalledWith(mockPage);
       expect(result).toMatchSnapshot();
     });
   });

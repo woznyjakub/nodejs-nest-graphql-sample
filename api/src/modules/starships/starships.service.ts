@@ -15,10 +15,9 @@ export class StarshipsService {
   ) {}
 
   async findAll(page: number): Promise<Starships> {
-    const cacheKey = `swapi-starships-page-${page}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getStarships(page),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getStarshipsCacheKey(page),
+      () => this.swapiService.getStarships(page),
     );
 
     return {
@@ -30,10 +29,9 @@ export class StarshipsService {
   }
 
   async findOne(id: number): Promise<Starship> {
-    const cacheKey = `swapi-starship-id-${id}`;
-
-    const swapiData = await this.swCommonService.fetchWithCaching(cacheKey, () =>
-      this.swapiService.getStarship(id),
+    const swapiData = await this.swCommonService.fetchWithCaching(
+      this.swCommonService.getStarshipCacheKey(id),
+      () => this.swapiService.getStarship(id),
     );
 
     return this.mapSingleStarship(swapiData);
