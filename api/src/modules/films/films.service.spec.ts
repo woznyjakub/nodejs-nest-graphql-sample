@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { filmResponseMock, filmsResponseMock } from '../../test/mocks/swapi';
+import { filmResponseMock, filmsResponseMock, peopleResponseMock } from '../../test/mocks/swapi';
 import { StarWarsCommonService } from '../star-wars-common/star-wars-common.service';
 import { SwapiService } from '../swapi/swapi.service';
 
@@ -10,6 +10,7 @@ describe('FilmsService', () => {
   let filmsService: FilmsService;
 
   const mockFetchWithCaching = vi.fn();
+  const mockGetAllPages = vi.fn();
 
   const mockGetFilmCacheKey = vi.fn();
   const mockGetFilmsCacheKey = vi.fn();
@@ -21,6 +22,7 @@ describe('FilmsService', () => {
           provide: StarWarsCommonService,
           useValue: {
             fetchWithCaching: mockFetchWithCaching,
+            getAllPages: mockGetAllPages,
             getFilmCacheKey: mockGetFilmCacheKey,
             getFilmsCacheKey: mockGetFilmsCacheKey,
           },
@@ -70,6 +72,21 @@ describe('FilmsService', () => {
       const result = await filmsService.getUniqueWordsCount();
 
       expect(result).toMatchSnapshot();
+    });
+  });
+
+  describe('getMostFrequentCharacterInFilms', () => {
+    it('should return the most frequent character(s) in the opening crawls', async () => {
+      mockGetAllPages
+        .mockResolvedValueOnce(filmsResponseMock.results)
+        .mockResolvedValueOnce(peopleResponseMock.results);
+
+      const expectedCharacters = ['Luke Skywalker']; // Dostosuj do swojego mocka
+
+      const result = await filmsService.getMostFrequentCharacterInFilms();
+
+      // Assercja
+      expect(result).toEqual(expectedCharacters);
     });
   });
 });

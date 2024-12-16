@@ -22,4 +22,9 @@ export class FilmsResolver {
   getUniqueWordsCount(): Promise<[string, number][]> {
     return this.filmsService.getUniqueWordsCount();
   }
+
+  @Query(() => [String], { name: 'filmsMostFrequentCharacterNameInFilmOpening' })
+  getMostFrequentCharacterInFilms(): Promise<string[]> {
+    return this.filmsService.getMostFrequentCharacterInFilms();
+  }
 }

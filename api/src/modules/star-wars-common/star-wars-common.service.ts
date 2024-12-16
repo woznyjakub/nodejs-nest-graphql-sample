@@ -30,7 +30,7 @@ export class StarWarsCommonService {
 
   async getAllPages<T extends object>(
     cacheHandlerFn: (page: number) => string,
-    getterFn: () => Promise<PagedResponse<T>>,
+    getterFn: (page: number) => Promise<PagedResponse<T>>,
   ): Promise<T[]> {
     const limit = 25;
     let page = 1;
@@ -38,7 +38,7 @@ export class StarWarsCommonService {
     const results: T[] = [];
 
     do {
-      const data = await this.fetchWithCaching(cacheHandlerFn(page), getterFn);
+      const data = await this.fetchWithCaching(cacheHandlerFn(page), () => getterFn(page));
 
       if (Array.isArray(data.results) || !results?.length) {
         results.push(...data.results);

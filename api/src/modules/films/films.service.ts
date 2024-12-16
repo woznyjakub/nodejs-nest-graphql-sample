@@ -76,4 +76,39 @@ export class FilmsService {
 
     return Array.from(wordCounts).sort((a, b) => b[1] - a[1]);
   }
+
+  async getMostFrequentCharacterInFilms(): Promise<string[]> {
+    const films = await this.swCommonService.getAllPages(
+      this.swCommonService.getFilmsCacheKey,
+      this.swapiService.getFilms,
+    );
+
+    const combinedOpeningCrawl = films
+      .map((film) => film.opening_crawl)
+      .join(' ')
+      .toLowerCase();
+
+    const people = await this.swCommonService.getAllPages(
+      this.swCommonService.getPeopleCacheKey,
+      this.swapiService.getPeople,
+    );
+
+    const characterOccurrences: Map<string, number> = new Map();
+
+    people.forEach((person) => {
+      // eslint-disable-next-line
+      const regex = new RegExp(`\\b${person.name.toLowerCase()}\\b`, 'g'); // Dopasowanie całego słowa
+      const matchCount = (combinedOpeningCrawl.match(regex) || []).length;
+
+      if (matchCount > 0) {
+        characterOccurrences.set(person.name, matchCount);
+      }
+    });
+
+    const maxOccurrences = Math.max(...characterOccurrences.values());
+
+    return Array.from(characterOccurrences.entries())
+      .filter(([, count]) => count === maxOccurrences)
+      .map(([name]) => name);
+  }
 }
