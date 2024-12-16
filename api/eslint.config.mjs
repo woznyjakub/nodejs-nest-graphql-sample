@@ -69,7 +69,7 @@ export default [
       'prefer-template': 'error',
       'require-await': 'error',
       'no-return-await': 'error',
-      'no-await-in-loop': 'warn',
+      'no-await-in-loop': 'off',
       'arrow-body-style': ['error', 'as-needed'],
       'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
       'no-var': 'error',

@@ -2,6 +2,13 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 
+export type PagedResponse<Item> = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Item[];
+};
+
 @Injectable()
 export class StarWarsCommonService {
   constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
@@ -19,6 +26,33 @@ export class StarWarsCommonService {
     await this.cacheManager.set(cacheKey, data);
 
     return data;
+  }
+
+  async getAllPages<T extends object>(
+    cacheHandlerFn: (page: number) => string,
+    getterFn: () => Promise<PagedResponse<T>>,
+  ): Promise<T[]> {
+    const limit = 25;
+    let page = 1;
+
+    const results: T[] = [];
+
+    do {
+      const data = await this.fetchWithCaching(cacheHandlerFn(page), getterFn);
+
+      if (Array.isArray(data.results) || !results?.length) {
+        results.push(...data.results);
+      } else {
+        break;
+      }
+
+      if (!data.next) {
+        break;
+      }
+      page++;
+    } while (page < limit);
+
+    return results;
   }
 
   private buildCacheKey(
@@ -69,7 +103,7 @@ export class StarWarsCommonService {
     return this.buildCacheKey('speciesMany', 'page', page);
   }
 
-  getPeople(page: number): string {
+  getPeopleCacheKey(page: number): string {
     return this.buildCacheKey('people', 'page', page);
   }
 }

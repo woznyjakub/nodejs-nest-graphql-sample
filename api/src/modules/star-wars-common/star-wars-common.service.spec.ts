@@ -53,6 +53,45 @@ describe('StarWarsCommonService', () => {
     });
   });
 
+  describe('getAllPages', () => {
+    it('should retrieve all pages of data and stop at the last page', async () => {
+      const mockCacheHandlerFn = vi.fn((page) => `cache-key-${page}`);
+      const mockGetterFn = vi.fn();
+
+      const page1ResponseMock = {
+        results: [{ id: 1 }, { id: 2 }],
+        next: 'https://swapi.dev/api/vehicles/?page=2',
+      };
+      const page2ResponseMock = {
+        results: [{ id: 3 }, { id: 4 }],
+        next: 'https://swapi.dev/api/vehicles/?page=3',
+      };
+      const page3ResponseMock = { results: [{ id: 5 }, { id: 6 }], next: null };
+
+      mockGetterFn
+        .mockResolvedValueOnce(page1ResponseMock)
+        .mockResolvedValueOnce(page2ResponseMock)
+        .mockResolvedValueOnce(page3ResponseMock);
+
+      const results = await swCommonService.getAllPages(mockCacheHandlerFn, mockGetterFn);
+
+      expect(results).toEqual([{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }]);
+      expect(mockCacheHandlerFn).toHaveBeenCalledTimes(3);
+      expect(mockGetterFn).toHaveBeenCalledTimes(3);
+    });
+
+    it('should stop early if no results are returned', async () => {
+      const mockCacheHandlerFn = vi.fn((page) => `cache-key-${page}`);
+      const mockGetterFn = vi.fn().mockResolvedValue({ results: [], next: false });
+
+      const results = await swCommonService.getAllPages(mockCacheHandlerFn, mockGetterFn);
+
+      expect(results).toEqual([]);
+      expect(mockCacheHandlerFn).toHaveBeenCalledTimes(1);
+      expect(mockGetterFn).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('buildCacheKey-dependent methods', () => {
     it('should generate correct vehicle cache key', () => {
       const id = 42;
@@ -116,7 +155,7 @@ describe('StarWarsCommonService', () => {
 
     it('should generate correct people cache key', () => {
       const page = 1;
-      const result = swCommonService.getPeople(page);
+      const result = swCommonService.getPeopleCacheKey(page);
       expect(result).toBe(`swapi-people-page-${page}`);
     });
   });
